@@ -1,0 +1,25 @@
+dependencies: \
+  /Users/Frank/TestProject/node_modules/react-native/React/Executors/RCTJSCExecutor.mm \
+  /Users/Frank/TestProject/node_modules/react-native/React/Executors/RCTJSCExecutor.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTJavaScriptExecutor.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/Frank/TestProject/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSBundleType.h \
+  /Users/Frank/TestProject/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JavaScriptCore.h \
+  /Users/Frank/TestProject/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JSCWrapper.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Modules/JSCSamplingProfiler.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTBridge+Private.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Modules/RCTDevSettings.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTJSCErrorHandling.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Base/RCTPerformanceLogger.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Profiler/RCTProfile.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Profiler/RCTJSCProfiler.h \
+  /Users/Frank/TestProject/node_modules/react-native/React/Modules/RCTDevMenu.h
