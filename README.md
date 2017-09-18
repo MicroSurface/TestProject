@@ -1,2 +1,2 @@
 # TestProject
-This Repository provides the test codes and awesome function
+This Repository provides the test codes and awesome functions
