@@ -32,13 +32,13 @@ export default class firstPage extends Component {
         const{ navigator } = this.props;
         if(navigator){
             navigator.pop();
-        };
+        }
     }
 
     render() {
         return (<View>
             <TouchableOpacity
-                onPress={()=>this.jumpToFirst.bind(this)}>
+                onPress={this.jumpToFirst.bind(this)}>
                 <Text style={{fontSize:20,color: 'red',margin:30}}>这是第1个页面，点击可以回到上个页面</Text>
                 <Text style={{fontSize:20,color: 'red',marginTop:10, marginLeft: 30}}>获得的参数：id={ this.state.id }</Text>
             </TouchableOpacity>
