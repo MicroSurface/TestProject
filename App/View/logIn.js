@@ -15,6 +15,9 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
+import {
+  Navigator,
+} from 'react-native-deprecated-custom-components';
 
 import firstPage from './firstPage'
 
@@ -32,7 +35,10 @@ export default class logIn extends Component {
       navigator.push({
         name: 'firstPage',
         component: firstPage,
-      })
+        params: {
+          id: 222
+        }
+      });
     }
   }
 

@@ -20,7 +20,6 @@ import {
 
 import logIn from './App/View/logIn';
 
-
 export default class TestProject extends Component {
 
   render() {
@@ -39,7 +38,7 @@ export default class TestProject extends Component {
       /*渲染场景*/
       renderScene={(route, navigator) => {
         let Component = route.component;
-        return <Component navigator={navigator} />
+        return <Component {...route.params} navigator={navigator} />
       }}/>
     );
   }
