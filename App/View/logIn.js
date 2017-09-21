@@ -33,7 +33,7 @@ var AccountList = [
 export default class logIn extends Component {
   constructor(props){
       super(props);
-      this.state = {};
+      this.state = {hidden: false};
   }
 
   verifyAccount(){
@@ -43,6 +43,14 @@ export default class logIn extends Component {
       if( AccountList[i].account == accValue && AccountList[i].password == pwdValue ){
         return true;
       }
+    }
+  }
+
+  hiddenBubbleBox() {
+    if (this.state.hidden) {
+      return null;
+    }else{
+      return <BubbleBox />;
     }
   }
 
@@ -59,17 +67,17 @@ export default class logIn extends Component {
         });
       }
     }else{
-       return;
+      return <BubbleBox/>
     }
   }
 
 
 
+
   render() {
     return(
-     
+      
       <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
-         
           <Image 
             style={styles.imageIcon}
             source ={require("./Image/iconImage.png")}  />
@@ -98,8 +106,7 @@ export default class logIn extends Component {
             onPress={()=>this.goNextPage()} >
             <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
-
-          <BubbleBox />
+          {this.hiddenBubbleBox()}
       </View>
     );
     
