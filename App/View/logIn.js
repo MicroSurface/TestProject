@@ -19,8 +19,15 @@ import {
   Navigator,
 } from 'react-native-deprecated-custom-components';
 
-import firstPage from './firstPage'
+import homePage from './homePage'
 
+var BubbleBox = require('./Component/bubbleBox');
+
+var AccountList = [
+  {account: 'zx2013rt@outlook.com', password: '2014'},
+  {account: 'zx2017rt@outlook.com', password: '2018'}
+];
+  
 
 
 export default class logIn extends Component {
@@ -29,22 +36,38 @@ export default class logIn extends Component {
       this.state = {};
   }
 
+  verifyAccount(){
+    let accValue = this.state.textACT; 
+    let pwdValue = this.state.textPWD;
+    for (var i = 0; i < AccountList.length; i++){
+      if( AccountList[i].account == accValue && AccountList[i].password == pwdValue ){
+        return true;
+      }
+    }
+  }
+
   goNextPage(){
-    const {navigator} = this.props;
-    if (navigator) {
-      navigator.push({
-        name: 'firstPage',
-        component: firstPage,
-        params: {
-          id: 222
-        }
-      });
+    if (this.state.textACT != null && this.state.textPWD != null){
+      const {navigator} = this.props;
+      if (navigator && this.verifyAccount()== true) {
+        navigator.push({
+          name: 'homePage',
+          component: homePage,
+          params: {
+            id: this.state.textACT
+          }
+        });
+      }
+    }else{
+       return;
     }
   }
 
 
+
   render() {
     return(
+     
       <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
          
           <Image 
@@ -54,6 +77,7 @@ export default class logIn extends Component {
           <TextInput
             style={styles.userInput}
             placeholder='Your Account'
+            onChangeText = {(textACT) => this.setState({textACT})}
             autoFocus={true}
             autoCapitalize='none'
             underlineColorAndroid={'transparent'}
@@ -62,6 +86,7 @@ export default class logIn extends Component {
           <TextInput
             style={styles.pswInput}
             placeholder='Your Password'
+            onChangeText = {(textPWD) => this.setState({textPWD})}
             autoFocus={false}
             secureTextEntry={true}
             keyboardType='numeric'
@@ -73,6 +98,8 @@ export default class logIn extends Component {
             onPress={()=>this.goNextPage()} >
             <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
+
+          <BubbleBox />
       </View>
     );
     
