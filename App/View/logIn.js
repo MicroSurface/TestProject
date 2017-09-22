@@ -33,7 +33,7 @@ var AccountList = [
 export default class logIn extends Component {
   constructor(props){
       super(props);
-      this.state = {hidden: false};
+      this.state = {hidden: true};
   }
 
   verifyAccount(){
@@ -57,7 +57,7 @@ export default class logIn extends Component {
   goNextPage(){
     if (this.state.textACT != null && this.state.textPWD != null){
       const {navigator} = this.props;
-      if (navigator && this.verifyAccount()== true) {
+      if (navigator && this.verifyAccount() == true) {
         navigator.push({
           name: 'homePage',
           component: homePage,
@@ -65,13 +65,15 @@ export default class logIn extends Component {
             id: this.state.textACT
           }
         });
+      }else{
+        this.setState({hidden: false});
+        this.hiddenBubbleBox();
       }
     }else{
-      return <BubbleBox/>
+      this.setState({hidden: false});
+      this.hiddenBubbleBox();
     }
   }
-
-
 
 
   render() {
