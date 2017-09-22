@@ -13,9 +13,7 @@ export default class bubbleBox extends Component {
 		this.state = {hidden: false};
 	}
 	componentDidMount() {
-		this.timer = setTimeout(
-			function(){
-				this.state = true;},
+		this.timer = setTimeout(() => {this.setState({hidden: true});},
 			2000
 		);
 	}
