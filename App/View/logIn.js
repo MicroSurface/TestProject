@@ -71,7 +71,6 @@ export default class logIn extends Component {
       }
     }else{
       this.setState({hidden: false});
-      this.hiddenBubbleBox();
     }
   }
 

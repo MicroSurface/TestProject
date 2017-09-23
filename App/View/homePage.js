@@ -9,6 +9,8 @@ import {
 
 import secondPage from './secondPage'
 
+var RollingBanner = require('./Component/rollingBanner')
+
 
 export default class homePage extends Component {
     constructor(props) {
