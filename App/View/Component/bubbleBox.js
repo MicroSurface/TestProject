@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import {
     StyleSheet,
@@ -20,6 +21,7 @@ export default class bubbleBox extends Component {
 
 
 	componentWillUnMount() {
+		alert("delete timer");
 		//卸载该页面时清除计时器
 		this.timer && clearTimeout(this.timer);
 	}
@@ -31,7 +33,7 @@ export default class bubbleBox extends Component {
 		}else{
 			return (
 				<View style={styles.container}>
-					<Text style={styles.reminder}>Error</Text>
+					<Text style={styles.reminder}>{this.props.text}</Text>
 				</View>
 			)
 		}
@@ -40,12 +42,12 @@ export default class bubbleBox extends Component {
 
 const styles = StyleSheet.create({
 	container:{
-		marginBottom: 20,
+		bottom: 80,
 		marginLeft: 50,
 		marginRight: 50,
 		borderRadius: 2,
-		height: 30,
 		backgroundColor: '#222222',
+		height: 30,
 		justifyContent: 'center',
 	},
 	reminder:{
