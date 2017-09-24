@@ -50,7 +50,7 @@ export default class logIn extends Component {
     if (this.state.hidden) {
       return null;
     }else{
-      return <BubbleBox />;
+      return <BubbleBox text = "Please enter your account"/>;
     }
   }
 
@@ -65,9 +65,6 @@ export default class logIn extends Component {
             id: this.state.textACT
           }
         });
-      }else{
-        this.setState({hidden: false});
-        this.hiddenBubbleBox();
       }
     }else{
       this.setState({hidden: false});
@@ -77,40 +74,44 @@ export default class logIn extends Component {
 
   render() {
     return(
-      
-      <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
-          <Image 
-            style={styles.imageIcon}
-            source ={require("./Image/iconImage.png")}  />
+      <View style={{backgroundColor: '#f4f4f4', flex: 1}}>
+        <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
+            <Image 
+              style={styles.imageIcon}
+              source ={require("./Image/iconImage.png")}  />
 
-          <TextInput
-            style={styles.userInput}
-            placeholder='Your Account'
-            onChangeText = {(textACT) => this.setState({textACT})}
-            autoFocus={true}
-            autoCapitalize='none'
-            underlineColorAndroid={'transparent'}
-            textAlign='center' />
+            <TextInput
+              style={styles.userInput}
+              placeholder='Your Account'
+              onChangeText = {(textACT) => this.setState({textACT})}
+              autoFocus={true}
+              autoCapitalize='none'
+              underlineColorAndroid={'transparent'}
+              textAlign='center' />
 
-          <TextInput
-            style={styles.pswInput}
-            placeholder='Your Password'
-            onChangeText = {(textPWD) => this.setState({textPWD})}
-            autoFocus={false}
-            secureTextEntry={true}
-            keyboardType='numeric'
-            underlineColorAndroid={'transparent'}
-            textAlign='center' />
+            <TextInput
+              style={styles.pswInput}
+              placeholder='Your Password'
+              onChangeText = {(textPWD) => this.setState({textPWD})}
+              autoFocus={false}
+              secureTextEntry={true}
+              keyboardType='numeric'
+              underlineColorAndroid={'transparent'}
+              textAlign='center' />
 
-          <TouchableOpacity
-            style={styles.login}
-            onPress={()=>this.goNextPage()} >
-            <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
-          </TouchableOpacity>
-          {this.hiddenBubbleBox()}
+            <TouchableOpacity
+              style={styles.login}
+              onPress={()=>this.goNextPage()} >
+              <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
+            </TouchableOpacity>
+            <View style={{flex:1, flexDirection:'row',alignItems:'flex-end', bottom:10}}>
+              <Text style={styles.register}>Register</Text>
+              <Text style={styles.forgetPSW}>Foget password?</Text>
+            </View>
+        </View>
+        {this.hiddenBubbleBox()}
       </View>
     );
-    
   }
 }
 
@@ -136,6 +137,20 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     height: 90,
+  },
+  register:{
+    marginLeft: 10,
+    fontSize: 15,
+    color: '#63B8FF',
+  },
+  forgetPSW:{
+    flex: 1,
+    textAlign: 'right',
+    flexDirection: 'row',
+    marginRight: 10,
+    fontSize: 15,
+    alignItems: 'flex-end',
+    color: '#63B8FF',
   }
 
 });
