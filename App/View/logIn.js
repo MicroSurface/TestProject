@@ -21,7 +21,7 @@ import {
 
 import homePage from './homePage'
 
-var BubbleBox = require('./Component/bubbleBox');
+import BubbleBox from './Component/BubbleBox';
 
 var AccountList = [
   {account: 'zx2013rt@outlook.com', password: '2014'},
@@ -46,14 +46,6 @@ export default class logIn extends Component {
     }
   }
 
-  hiddenBubbleBox() {
-    if (this.state.hidden) {
-      return null;
-    }else{
-      return <BubbleBox text = "Please enter your account"/>;
-    }
-  }
-
   goNextPage(){
     if (this.state.textACT != null && this.state.textPWD != null){
       const {navigator} = this.props;
@@ -68,6 +60,17 @@ export default class logIn extends Component {
       }
     }else{
       this.setState({hidden: false});
+      this.logInTimer = setTimeout(() => {
+        this.setState({hidden: true});
+      }, 2000);
+    }
+  }
+
+  hiddenBubbleBox() {
+    if (this.state.hidden) {
+      return null;
+    }else{
+      return <BubbleBox text="Please enter your account" />
     }
   }
 
@@ -104,16 +107,14 @@ export default class logIn extends Component {
               onPress={()=>this.goNextPage()} >
               <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
             </TouchableOpacity>
-            <View style={{flex:1, flexDirection:'row',alignItems:'flex-end', bottom:10}}>
-              <Text style={styles.register}>Register</Text>
-              <Text style={styles.forgetPSW}>Foget password?</Text>
-            </View>
         </View>
         {this.hiddenBubbleBox()}
       </View>
     );
   }
 }
+
+
 
 const styles = StyleSheet.create({
   imageIcon:{
@@ -138,19 +139,5 @@ const styles = StyleSheet.create({
     marginRight: 10,
     height: 90,
   },
-  register:{
-    marginLeft: 10,
-    fontSize: 15,
-    color: '#63B8FF',
-  },
-  forgetPSW:{
-    flex: 1,
-    textAlign: 'right',
-    flexDirection: 'row',
-    marginRight: 10,
-    fontSize: 15,
-    alignItems: 'flex-end',
-    color: '#63B8FF',
-  }
 
 });

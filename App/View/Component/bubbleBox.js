@@ -8,20 +8,21 @@ import {
     View
 } from 'react-native'
 
-export default class bubbleBox extends Component {
+export default class BubbleBox extends Component {
 	constructor(props){
 		super(props);
 		this.state = {hidden: false};
 	}
 	componentDidMount() {
-		this.timer = setTimeout(() => {this.setState({hidden: true});},
+		this.timer = setTimeout(() => {
+			this.setState({hidden:true});
+			},
 			2000
 		);
 	}
 
 
-	componentWillUnMount() {
-		alert("delete timer");
+	componentWillUnmount() {
 		//卸载该页面时清除计时器
 		this.timer && clearTimeout(this.timer);
 	}
@@ -57,4 +58,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-module.exports = bubbleBox;
+module.exports = BubbleBox;

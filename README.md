@@ -9,7 +9,7 @@ This Repository provides the test codes and awesome functions
 
 	4. Receive data from TextInput
 
-	5. Add individual components(Testing)
+	5. Add individual components(Testing) => Bug Fixed
 
 	6. Add rolling banner(Testing)
 
