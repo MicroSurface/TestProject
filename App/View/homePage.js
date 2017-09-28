@@ -7,16 +7,21 @@ import {
     View
 } from 'react-native'
 
-import secondPage from './secondPage'
+import secondPage from './secondPage';
 
-var RollingBanner = require('./Component/rollingBanner')
+import banner1 from './Image/High Sierra.jpg';
+import banner2 from './Image/Yosemite.jpg';
+import banner3 from './Image/Sierra.jpg';
+import banner4 from './Image/El Capitan.jpg';
+
+var RollingBannerTest = require('./Component/RollingBannerTest');
 
 
 export default class homePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           id: null
+           id: null,
         };
     }
 
@@ -44,13 +49,11 @@ export default class homePage extends Component {
     }
 
     render() {
-        return (<View>
-            <TouchableOpacity
-                onPress={this.jumpToSecond.bind(this)}>
-                <Text style={{fontSize:20,color: 'red',margin:30}}>This is first page and click to get next</Text>
-                <Text style={{fontSize:20,color: 'red',marginTop:10, marginLeft: 30}}>parament:id={ this.state.id }</Text>
-            </TouchableOpacity>
-        </View>);
+        return (
+            <View>
+               <RollingBannerTest bannerList={[banner1,banner2,banner3,banner4]}/>
+            </View>
+        );
     }
 
 }
