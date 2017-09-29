@@ -32,7 +32,7 @@ export default class TestProject extends Component {
 
       /* 配置跳转动画 */
       configureScene={(route) => {
-        return Navigator.SceneConfigs.HorizontalSwipeJump;
+        return Navigator.SceneConfigs.PushFromRight;
       }}
 
       /*渲染场景*/

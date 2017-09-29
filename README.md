@@ -12,4 +12,5 @@ This Repository provides the test codes and awesome functions
 	5. Add individual components(Testing) => Bug Fixed
 
 	6. Add rolling banner(Testing) => Actualize the rolling banner(without Indicator)
+		=> Actualize the rolling banner(with Indicator)
 

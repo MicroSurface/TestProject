@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
+var Indicator = require('./Indicator');
 
 const mWidth = Dimensions.get('window').width;
 const mHeight = Dimensions.get('window').height;
@@ -54,6 +55,17 @@ export default class RollingBannerTest extends Component {
 		let offsetX = event.nativeEvent.contentOffset.x;
 		this.nextPage = Math.round(offsetX / mWidth);
 		this.nextPagePixel = offsetX / mWidth;
+
+		//指示器滚动效果
+		if (this.isAutoScroll) {
+			this.ref.indicator.setNativeProps(
+				{style:{right: this.ref.rightX - this.nextPage * 14}}
+			)
+		}else{
+			this.ref.indicator.setNativeProps(
+				{style:{right: this.ref.rightX - this.nextPagePixel * 14}}
+			)
+		}
 	}
 
 	onTouchStart() {
@@ -89,9 +101,12 @@ export default class RollingBannerTest extends Component {
 					onScrollEndDrag={()=>this.startScroll()}
 					onTouchEnd={()=>this.startScroll()}
 					ref={(ref)=>this.scrollView = ref}>
-
 					{this.renderBanner()}
 				</ScrollView>
+				<Indicator 
+					pointCount={this.props.bannerList.length}
+					ref={(ref)=>this.ref=ref}>
+				</Indicator>
 			</View>
 		);
 	}
