@@ -36,7 +36,7 @@ export default class RollingBannerTest extends Component {
 	}
 
 	componentWillUnmount() {
-		this.this.scrollTimer && clearInterval(this.scrollTimer);
+		this.scrollTimer && clearInterval(this.scrollTimer);
 	}
 
 	static defaultProps = {
