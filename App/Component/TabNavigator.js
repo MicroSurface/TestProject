@@ -10,8 +10,8 @@ import {
 import TabNavigator from 'react-native-tab-navigator';
 import Dimensions from 'Dimensions';
 
-import SecondPage from '../SecondPage';
-import HomePage from '../HomePage';
+import SecondPage from '../View/SecondPage';
+import HomePage from '../View/HomePage';
 
 const mWidth = Dimensions.get('window').width;
 const mHeight = Dimensions.get('window').height;
@@ -33,8 +33,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'home'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
+						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'home'})}>
 						<HomePage />
 					</TabNavigator.Item>
@@ -43,8 +43,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'subject'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
+						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'subject'})}>
 						<View>
 							<Text>This is test</Text>
@@ -55,8 +55,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'discover'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
+						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'discover'})}>
 						<SecondPage />
 					</TabNavigator.Item>
@@ -65,8 +65,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'myInfo'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
+						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'myInfo'})}>
 						<View>
 							<Text>首页</Text>

@@ -7,9 +7,9 @@ import {
 	View
 } from 'react-native'
 
-import logIn from './logIn'
+import LogIn from './LogIn'
 
-export default class secondPage extends Component {
+export default class SecondPage extends Component {
 	constructor(props) {
         super(props);
         this.state = {
