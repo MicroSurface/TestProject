@@ -14,3 +14,5 @@ This Repository provides the test codes and awesome functions
 	6. Add rolling banner(Testing) => Actualize the rolling banner(without Indicator)
 		=> Actualize the rolling banner(with Indicator)
 
+	7. Add TabNavigator
+

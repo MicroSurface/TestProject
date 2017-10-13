@@ -15,6 +15,7 @@ import banner3 from './Image/Sierra.jpg';
 import banner4 from './Image/El Capitan.jpg';
 
 var RollingBannerTest = require('./Component/RollingBannerTest');
+var TabNavigators = require('./Component/TabNavigator');
 
 
 export default class homePage extends Component {
@@ -50,9 +51,14 @@ export default class homePage extends Component {
 
     render() {
         return (
-            <View>
-               <RollingBannerTest bannerList={[banner1,banner2,banner3,banner4]}/>
-            </View>
+            <View style={{ flex: 1}}>
+                <View >
+                   <RollingBannerTest bannerList={[banner1,banner2,banner3,banner4]} />
+                </View>
+                <View style={{height: 45}}>
+                     <TabNavigators />
+                </View>
+            </View>            
         );
     }
 
