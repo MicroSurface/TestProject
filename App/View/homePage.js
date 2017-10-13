@@ -7,8 +7,7 @@ import {
     View
 } from 'react-native'
 
-import secondPage from './secondPage';
-
+import Dimensions from 'Dimensions';
 import banner1 from './Image/High Sierra.jpg';
 import banner2 from './Image/Yosemite.jpg';
 import banner3 from './Image/Sierra.jpg';
@@ -17,8 +16,10 @@ import banner4 from './Image/El Capitan.jpg';
 var RollingBannerTest = require('./Component/RollingBannerTest');
 var TabNavigators = require('./Component/TabNavigator');
 
+const mWidth = Dimensions.get('window').width;
 
-export default class homePage extends Component {
+
+export default class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,30 +37,28 @@ export default class homePage extends Component {
      /**
      * 跳转到下一个页面
      */
-     jumpToSecond() {
-        const{ navigator } = this.props;
-        if(navigator){
-            navigator.push({
-                name: 'seondPage',
-                component: secondPage,
-                params: {
-                    message: "TestParament"
-                }
-            });
-        }
-    }
+    //  jumpToSecond() {
+    //     const{ navigator } = this.props;
+    //     if(navigator){
+    //         navigator.push({
+    //             name: 'seondPage',
+    //             component: secondPage,
+    //             params: {
+    //                 message: "TestParament"
+    //             }
+    //         });
+    //     }
+    // }
 
     render() {
         return (
-            <View style={{ flex: 1}}>
-                <View >
+            <View>
+                <View>
                    <RollingBannerTest bannerList={[banner1,banner2,banner3,banner4]} />
-                </View>
-                <View style={{height: 45}}>
-                     <TabNavigators />
                 </View>
             </View>            
         );
     }
 
 }
+

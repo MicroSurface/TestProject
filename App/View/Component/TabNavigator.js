@@ -8,6 +8,13 @@ import {
 	AppRegistry,
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
+import Dimensions from 'Dimensions';
+
+import SecondPage from '../SecondPage';
+import HomePage from '../HomePage';
+
+const mWidth = Dimensions.get('window').width;
+const mHeight = Dimensions.get('window').height;
 
 export default class TabNavigators extends Component{
 	constructor (props){
@@ -29,9 +36,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
 						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'home'})}>
-						<View>
-							<Text>首页</Text>
-						</View>
+						<HomePage />
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="专题"
@@ -42,7 +47,7 @@ export default class TabNavigators extends Component{
 						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'subject'})}>
 						<View>
-							<Text>首页</Text>
+							<Text>This is test</Text>
 						</View>
 					</TabNavigator.Item>
 					<TabNavigator.Item
@@ -53,9 +58,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
 						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("./Images/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'discover'})}>
-						<View>
-							<Text>首页</Text>
-						</View>
+						<SecondPage />
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="我的"
@@ -76,9 +79,11 @@ export default class TabNavigators extends Component{
 }
 
 const styles = StyleSheet.create({
-	container:{ 
+	container:{
+		flex: 1,
+		width: mWidth,
 		height: 40,
-		marginBottom: 0, 
+		bottom: 2,
     },  
 	iconStyle: {
 		width: 26,
