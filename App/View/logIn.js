@@ -1,5 +1,4 @@
 /**
- * Sample React Native App
  * https://github.com/facebook/react-native
  * @flow
  */
@@ -12,6 +11,7 @@ import {
   Text,
   TextInput,
   View,
+  Modal,
   Button,
   TouchableOpacity,
 } from 'react-native';
@@ -19,21 +19,24 @@ import {
   Navigator,
 } from 'react-native-deprecated-custom-components';
 
-import homePage from './homePage'
-
+import HomePage from './HomePage'
 import BubbleBox from './Component/BubbleBox';
+import TabNavigator from './Component/TabNavigator';
 
 var AccountList = [
-  {account: 'zx2013rt@outlook.com', password: '2014'},
+  {account: '1', password: '1'},
   {account: 'zx2017rt@outlook.com', password: '2018'}
 ];
   
 
-
-export default class logIn extends Component {
+export default class LogIn extends Component {
   constructor(props){
       super(props);
-      this.state = {hidden: true};
+      this.state = {
+        hidden: true,
+        isEmpty: true,
+        isCorrect: false
+      };
   }
 
   verifyAccount(){
@@ -51,18 +54,19 @@ export default class logIn extends Component {
       const {navigator} = this.props;
       if (navigator && this.verifyAccount() == true) {
         navigator.push({
-          name: 'homePage',
-          component: homePage,
+          name: 'TabNavigator',
+          component: TabNavigator,
           params: {
             id: this.state.textACT
           }
         });
+      }else{
+        this.setState({hidden: false, isEmpty: false ,isCorrect: false});
+        this.timeHandler();
       }
     }else{
-      this.setState({hidden: false});
-      this.logInTimer = setTimeout(() => {
-        this.setState({hidden: true});
-      }, 2000);
+      this.setState({hidden: false, isEmpty: true, isCorrect: true});
+      this.timeHandler();
     }
   }
 
@@ -70,8 +74,25 @@ export default class logIn extends Component {
     if (this.state.hidden) {
       return null;
     }else{
-      return <BubbleBox text="Please enter your account" />
+      if (this.state.isEmpty){
+        return <BubbleBox test="Please enter your account" />
+      }
+      if (!this.state.isCorrect) {
+        return <BubbleBox test="Invalid password" />
+      }
     }
+  }
+
+  timeHandler() {
+    this.logInTimer = setTimeout(() => {
+      //卸载BubbleBox组件
+      this.setState({hidden: true});
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    //清除计时器
+    this.logInTimer && clearTimeout(this.logInTimer);
   }
 
 

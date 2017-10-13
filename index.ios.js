@@ -18,19 +18,19 @@ import {
   Navigator,
 } from 'react-native-deprecated-custom-components';
 
-import logIn from './App/View/logIn';
+import LogIn from './App/View/LogIn';
 
 export default class TestProject extends Component {
 
   render() {
-    var defaultName='logIn';
-    var defaultComponent = logIn;
+    var defaultName='LogIn';
+    var defaultComponent = LogIn;
     return(
       <Navigator
       /* 初始化路由 */
       initialRoute={{name: defaultName, component: defaultComponent}}
-
       /* 配置跳转动画 */
+
       configureScene={(route) => {
         return Navigator.SceneConfigs.PushFromRight;
       }}
@@ -39,8 +39,8 @@ export default class TestProject extends Component {
       renderScene={(route, navigator) => {
         let Component = route.component;
         return <Component {...route.params} navigator={navigator} />
-      }}/>
-    );
+      }} />
+    )
   }
 }
 
