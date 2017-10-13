@@ -8,13 +8,16 @@ import {
 } from 'react-native'
 
 import Dimensions from 'Dimensions';
-import banner1 from './Image/High Sierra.jpg';
-import banner2 from './Image/Yosemite.jpg';
-import banner3 from './Image/Sierra.jpg';
-import banner4 from './Image/El Capitan.jpg';
 
-var RollingBannerTest = require('./Component/RollingBannerTest');
-var TabNavigators = require('./Component/TabNavigator');
+// import secondPage from './secondPage';
+
+import banner1 from '../Image/High Sierra.jpg';
+import banner2 from '../Image/Yosemite.jpg';
+import banner3 from '../Image/Sierra.jpg';
+import banner4 from '../Image/El Capitan.jpg';
+
+var RollingBannerTest = require('../Component/RollingBannerTest');
+var TabNavigators = require('../Component/TabNavigator');
 
 const mWidth = Dimensions.get('window').width;
 

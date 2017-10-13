@@ -20,8 +20,8 @@ import {
 } from 'react-native-deprecated-custom-components';
 
 import HomePage from './HomePage'
-import BubbleBox from './Component/BubbleBox';
-import TabNavigator from './Component/TabNavigator';
+import BubbleBox from '../Component/BubbleBox';
+import TabNavigator from '../Component/TabNavigator';
 
 var AccountList = [
   {account: '1', password: '1'},
@@ -102,7 +102,7 @@ export default class LogIn extends Component {
         <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
             <Image 
               style={styles.imageIcon}
-              source ={require("./Image/iconImage.png")}  />
+              source ={require("../Image/iconImage.png")}  />
 
             <TextInput
               style={styles.userInput}
