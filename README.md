@@ -16,3 +16,5 @@ This Repository provides the test codes and awesome functions
 
 	7. Add TabNavigator
 
+	8. Add ListView & Add More Banners
+
