@@ -20,9 +20,19 @@ export default class QuickVisitBanner extends Component {
 		let arr = [];
 		for (let i in this.props.iconList) {
 			if(i == 0){
-				arr.push(<Image key={i} style={styles.imageStyle1} source={this.props.iconList[i].image}/>);
+				arr.push(
+					<TouchableOpacity key={i} style={styles.containerStyle1}>
+						<Image style={styles.imageStyle} source={this.props.iconList[i].image}/>
+						<Text style={styles.textStyle}>{this.props.iconList[i].titles}</Text>
+					</TouchableOpacity>
+				);
 			}else{
-				arr.push(<Image key={i} style={styles.imageStyle2} source={this.props.iconList[i].image}/>);
+				arr.push(
+					<TouchableOpacity key={i} style={styles.containerStyle2}>
+						<Image style={styles.imageStyle} source={this.props.iconList[i].image}/>
+						<Text style={styles.textStyle}>{this.props.iconList[i].titles}</Text>
+					</TouchableOpacity>
+				);
 			}
 			
 		}
@@ -40,16 +50,28 @@ export default class QuickVisitBanner extends Component {
 }
 
 const styles = StyleSheet.create({
-	imageStyle1: {
+	containerStyle1: {
 		marginTop:10,
-		height:30,
-		width:30,
+		height:50,
+		width:45
 	},
-	imageStyle2: {
-		marginLeft: 40,
+	containerStyle2: {
+		marginLeft: 25,
 		marginTop:10,
+		height:50,
+		width:45
+	},
+	imageStyle:{
+		alignSelf:'center',
 		height:30,
-		width:30,
+		width:30
+	},
+	textStyle:{
+		marginTop:10,
+		height:12,
+		fontSize:10,
+		color:'#666666',
+		textAlign:'center'
 	}
 
 })
