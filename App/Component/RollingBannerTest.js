@@ -46,11 +46,15 @@ export default class RollingBannerTest extends Component {
 	renderBanner() {
 		let arr = [];
 		for (let i in this.props.bannerList) {
-			arr.push(<Image key={i} style={styles.imageStyle} source={this.props.bannerList[i]}/>);
+			arr.push(
+				<TouchableOpacity key={i}>
+					<Image style={styles.imageStyle} source={this.props.bannerList[i]}/>
+				</TouchableOpacity>
+			);
 		}
 		return arr;
 	}
-
+	
 	onScroll(event) {
 		let offsetX = event.nativeEvent.contentOffset.x;
 		this.nextPage = Math.round(offsetX / mWidth);
