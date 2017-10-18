@@ -13,8 +13,6 @@ import {
 
 import Dimensions from 'Dimensions';
 
-// import secondPage from './secondPage';
-
 import banner1 from '../Image/High Sierra.jpg';
 import banner2 from '../Image/Yosemite.jpg';
 import banner3 from '../Image/Sierra.jpg';
@@ -44,23 +42,26 @@ export default class HomePage extends Component {
         this.state = {
            dataSource: ds,
            // statistics:["h","e","l","l","o"]
-           statistics:{ TopicHealth:[{quantity:"870", questionQuantity:"765",titles:"你坚持过哪些细小的好习惯？", textBody:"每一次扔垃圾的时候会把锋利的比如针，刀片，撕开的罐头盖，曲别针，等抱起来留张纸条。"}], 
-                        Movies:[{quantity:"9830",questionQuantity:"765", titles:"十部电影，回味逝去的背景", textBody:"经过几十年的变迁，北京由一个古意盎然的历史文化名城摇身一变成为了一个混合着"}],
-                        Technolgy:[{quantity:"2400",questionQuantity:"765",titles:"如何评价苹果A11处理器？", textBody:"A11的2大+4小核心结构，实际上那么几个小核心的规模就跟835的大核心差不多。为什么，因为iphone的利润率这么高，苹果可以在芯片设计制造上面堆钱啊。增加一些核心面积不会对iphone整机利润率产生多少影响，但却会大大提升A11对比835的性能对比提升逼格，售价。"}],
-            },
+           statistics:{},
         };
     }
 
     componentDidMount(){
         //这里获取从Login页面传递过来的参数：id
-        this.setState({
-            id: this.props.id
-        });
+        // this.setState({
+        //     id: this.props.id
+        // });
+        this._fetchData();
+    }
+
+    _fetchData(){
+        let response = require('../Statistics/Data');
+        let responseData = response.Data;
+        this.setState({statistics:responseData});
     }
 
 
     _renderHeader(sectionData, sectionId){
-        console.log(sectionData);
         for (let i in sectionData){
             if(sectionData && sectionId){
                 return(
@@ -68,7 +69,7 @@ export default class HomePage extends Component {
                         <View style={styles.headerStyle}>
                             <Image style={styles.headerImageStyle} source={icon1}/>
                             <View style={styles.headerTitleStyle}>
-                                <Text style={styles.headerUserStyle}>来自话题：{sectionId}</Text>
+                                <Text style={styles.headerUserStyle}>来自话题：{sectionData[i].topicSource}</Text>
                                 <Text style={styles.headerInfoStyle}> {sectionData[0].quantity}人关注，{sectionData[0].questionQuantity} 个问题</Text>
                             </View>
                             <TouchableOpacity style={styles.headerConcernStyle}>
@@ -84,9 +85,6 @@ export default class HomePage extends Component {
     }
 
     _renderRow(rowData, rowId, sectionId){
-        if(rowData){
-            _rowData = rowData;
-        }
         return(
             <View>
                <View style={styles.rowDataStyle}>
