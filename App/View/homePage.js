@@ -24,11 +24,19 @@ import icon3 from '../Image/Icons/Subject.png';
 import icon4 from '../Image/Icons/Collect.png';
 import icon5 from '../Image/Icons/Mypoints.png'
 
+import pic1 from '../Image/Scence1.jpg';
+import pic2 from '../Image/Scence2.jpg';
+import pic3 from '../Image/Scence3.jpg';
+import pic4 from '../Image/Scence4.jpg';
+import pic5 from '../Image/Scence5.jpg';
+
+import headShade from '../Image/Icons/icon_headshade03.png';
 
 var RollingBannerTest = require('../Component/RollingBannerTest');
 var TabNavigators = require('../Component/TabNavigator');
 var QuickVisitBanner = require('../Component/QuickVisitBanner');
 var PopularTopicBanner = require('../Widget/PopularTopicBanner');
+var picList = [pic1, pic2, pic3, pic4, pic5];
 
 const mWidth = Dimensions.get('window').width;
 
@@ -41,7 +49,6 @@ export default class HomePage extends Component {
         });
         this.state = {
            dataSource: ds,
-           // statistics:["h","e","l","l","o"]
            statistics:{},
         };
     }
@@ -55,7 +62,7 @@ export default class HomePage extends Component {
     }
 
     _fetchData(){
-        let response = require('../Statistics/Data');
+        let response = require('../Statistics/TopicData');
         let responseData = response.Data;
         this.setState({statistics:responseData});
     }
@@ -85,15 +92,82 @@ export default class HomePage extends Component {
     }
 
     _renderRow(rowData, rowId, sectionId){
+        if (rowData.topicProps == "topic"){
+            return(
+                <View>
+                   <View style={styles.rowDataStyle}>
+                         <View style={styles.headerStyle}>
+                            <Image style={styles.headerImageStyle} source={icon1}/>
+                            <View style={styles.headerTitleStyle}>
+                                <Text style={styles.headerUserStyle}>来自话题：{rowData.topicSource}</Text>
+                                <Text style={styles.headerInfoStyle}> {rowData.quantity}人关注，{rowData.questionQuantity} 个问题</Text>
+                            </View>
+                            <TouchableOpacity style={styles.headerConcernStyle}>
+                                <Text style={styles.headerConcernTitleStyle}>+ 关注</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {this._renderLine(sectionId)}
+                        <Text numberOfLines={1} style={styles.rowDataTitleStyle}>{rowData.titles}</Text>
+                        <Text numberOfLines={3} style={styles.rowDataTextStyle}>{rowData.textBody}</Text>
+                   </View>
+                </View>
+            )
+        }else if(rowData.topicProps == "advertise"){
+            return(
+                <View>
+                   <View style={styles.rowDataADStyle}>
+                         <View style={styles.headerStyle}>
+                            <Image style={styles.headerImageStyle} source={icon1}/>
+                            <View style={styles.headerTitleStyle}>
+                                <Text style={styles.headerUserStyle}>来自话题：{rowData.topicSource}</Text>
+                                <Text style={styles.headerInfoStyle}> {rowData.quantity}人关注，{rowData.questionQuantity} 个问题</Text>
+                            </View>
+                            <TouchableOpacity style={styles.headerConcernStyle}>
+                                <Text style={styles.headerConcernTitleStyle}>+ 关注</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {this._renderLine(sectionId)}
+                        {this._renderAdvertiseList(rowData, sectionId)}
+                   </View>
+                </View>
+            )
+        }
+        
+    }
+
+    _renderAdvertiseList(rowData, sectionId){
         return(
-            <View>
-               <View style={styles.rowDataStyle}>
-                    <Text numberOfLines={1} style={styles.rowDataTitleStyle}>{rowData.titles}</Text>
-                    <Text numberOfLines={3} style={styles.rowDataTextStyle}>{rowData.textBody}</Text>
-               </View>
+            <View style={styles.rowDataADContainerStyle}>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    {this._renderAdvertiseContent(rowData.category)}
+                </ScrollView>
             </View>
-           
         )
+    }
+
+    _renderAdvertiseContent(rowData, sectionId){
+        let arr = [];
+        for (let i in rowData){
+            arr.push(
+                    <TouchableOpacity key={i} style={styles.rowDataADSingleViewStyle}>
+                        <Image style={styles.rowDataADTopicImgStyle} source={picList[i]}>
+                            <Image style={styles.headShadeStyle} source={headShade} />
+                        </Image>
+                        <Text numberOfLines={2} style={styles.rowDataTopicTitleStyle}>{rowData[i].topicTitle}</Text>
+                        <Text numberOfLines={1} style={styles.rowDataTopicSourceStyle}>{rowData[i].topicSource}</Text>
+                        <View style={styles.rowDataTopicTagStyle}>
+                            <Text numberOfLines={1} style={styles.rowDataTagStyle}>{rowData[i].tag}</Text>
+                        </View>
+                        <View style={styles.clickToCheckViewStyle}>
+                            <Text style={styles.clickToCheckTextStyle}>点击查看</Text>
+                        </View>
+                        
+                    </TouchableOpacity> 
+            );
+        }
+        return arr;
     }
 
     _renderLine(sectionId){
@@ -123,7 +197,7 @@ export default class HomePage extends Component {
             <ScrollView
                 style={styles.scrollViewStyle}
                 showsVerticalScrollIndicator={false}>
-                <RollingBannerTest bannerList={[banner1,banner2,banner3,banner4]} />
+                <RollingBannerTest bannerList={[pic1,pic2,pic3,pic4]} />
                 <QuickVisitBanner  iconList={[
                     {image:icon1,titles:"回答"},
                     {image:icon2,titles:"视频"},
@@ -135,8 +209,7 @@ export default class HomePage extends Component {
                     dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
                     renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, rowId, sectionId)}
                     showsVerticalScrollIndicator={false}
-                    enableEmptySections={true}
-                    renderSectionHeader={(sectionData, sectionId) => this._renderHeader(sectionData, sectionId)}>
+                    enableEmptySections={true}>
                 </ListView>
             </ScrollView>            
         );
@@ -153,7 +226,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#f5f5f5'
     },
     headerStyle:{
-        marginTop:10,
+        marginTop:0,
         flexDirection:'row',
         width:mWidth, 
         height:70, 
@@ -206,9 +279,95 @@ const styles = StyleSheet.create({
         backgroundColor:'#dfdfdf'
     },
     rowDataStyle:{
-        marginTop:0,
-        height:120,
-        backgroundColor: '#ffffff', 
+        marginTop:10,
+        height:180,
+        backgroundColor: '#ffffff',
+    },
+    rowDataADStyle:{
+        marginTop:10,
+        height:300,
+        backgroundColor:'#ffffff',
+    },
+    rowDataADContainerStyle:{
+        marginTop:15,
+        marginLeft:0,
+        height:230, 
+        width:mWidth,
+    },
+    rowDataADSingleViewStyle:{
+        backgroundColor:'#ffffff', 
+        marginLeft:20, 
+        marginTop:0, 
+        height:195, 
+        width:150, 
+        borderWidth:1,
+        borderRadius:2,
+        borderColor:'#dfdfdf',
+    },
+    rowDataADTopicImgStyle:{
+        marginTop:20,
+        height:40,
+        width:40,
+        alignSelf:'center',
+    },
+    rowDataTopicTitleStyle:{
+        marginTop:10,
+        marginLeft:10,
+        marginRight:10,
+        lineHeight:15,
+        fontSize:12,
+        color:'#222222',
+        fontWeight:'bold',
+        textAlign:'center',
+        alignSelf:'center',
+    },
+    rowDataTopicSourceStyle:{
+        marginTop:5,
+        marginLeft:10,
+        marginRight:10,
+        fontSize:11,
+        color:'#666666',
+        textAlign:'center',
+        alignSelf:'center',
+    },
+    rowDataTopicTagStyle:{
+        marginTop:5,
+        marginLeft:10,
+        marginRight:10,
+        backgroundColor:'#dfdfdf',
+        borderRadius:2,
+        justifyContent:'center',
+        alignSelf:'center',
+    },
+    rowDataTagStyle:{
+        marginTop:5,
+        marginBottom:5,
+        marginLeft:5,
+        marginRight:5,
+        fontSize:11,
+        color:'#666666',
+        textAlign:'center',
+        alignSelf:'center',
+    },
+    clickToCheckViewStyle:{
+        marginTop:10,
+        marginLeft:10,
+        marginRight:10,
+        width:100,
+        borderColor:'#1E90FF',
+        borderRadius:2,
+        borderWidth:1,
+        backgroundColor:'#ffffff',
+        justifyContent:'center',
+        alignSelf:'center',
+    },
+    clickToCheckTextStyle:{
+        marginTop:5,
+        marginBottom:5,
+        fontSize:12,
+        color:'#1E90FF',
+        textAlign:'center',
+        alignSelf:'center',
     },
     rowDataTitleStyle:{
         marginTop: 10,
@@ -227,7 +386,11 @@ const styles = StyleSheet.create({
         lineHeight:18,
         color:'#666666',
     },
-    
-
+    headShadeStyle:{
+        marginTop:0,
+        height:40,
+        width:40,
+        alignSelf:'center',
+    }
 })
 
