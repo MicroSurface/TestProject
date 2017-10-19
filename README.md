@@ -20,3 +20,7 @@ This Repository provides the test codes and awesome functions
 
 	9. Banenr Optimization & ListView Header 
 
+	10. Optimize Data Structure & ListView Adjustion
+
+	11. Add Subject Page
+

@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
         borderColor:'#dfdfdf',
     },
     rowDataADTopicImgStyle:{
-        marginTop:20,
+        marginTop:15,
         height:40,
         width:40,
         alignSelf:'center',

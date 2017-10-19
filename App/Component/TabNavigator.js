@@ -12,6 +12,7 @@ import Dimensions from 'Dimensions';
 
 import SecondPage from '../View/SecondPage';
 import HomePage from '../View/HomePage';
+import SubjectPage from '../View/SubjectPage';
 
 const mWidth = Dimensions.get('window').width;
 const mHeight = Dimensions.get('window').height;
@@ -46,9 +47,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'subject'})}>
-						<View>
-							<Text>This is test</Text>
-						</View>
+						<SubjectPage />
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="发现"
@@ -68,8 +67,8 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
 						onPress={()=>this.setState({ selectedTab:'myInfo'})}>
-						<View>
-							<Text>首页</Text>
+						<View style={{flex:1, justifyContent:'center'}}>
+							<Text style={{alignSelf:'center', fontSize:20}}>我的</Text>
 						</View>
 					</TabNavigator.Item>
 				</TabNavigator>
