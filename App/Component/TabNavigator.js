@@ -8,6 +8,8 @@ import {
 	AppRegistry,
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
+import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Dimensions from 'Dimensions';
 
 import SecondPage from '../View/SecondPage';
@@ -34,8 +36,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'home'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderIcon={()=> <Icon size={28} name={'ios-home-outline'} color={ '#1E90FF'}/>}
+						renderSelectedIcon={()=> <Icon size={28} name={'ios-home'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'home'})}>
 						<HomePage />
 					</TabNavigator.Item>
@@ -44,8 +46,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'subject'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderIcon={()=> <Icon size={27} name={'ios-paper-outline'} color={ '#1E90FF'}/>}
+						renderSelectedIcon={()=> <Icon size={27} name={'ios-paper'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'subject'})}>
 						<SubjectPage />
 					</TabNavigator.Item>
@@ -54,8 +56,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'discover'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderIcon={()=> <Icon size={28} name={'ios-bookmarks-outline'} color={ '#1E90FF'}/>}
+						renderSelectedIcon={()=> <Icon size={28} name={'ios-bookmarks'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'discover'})}>
 						<SecondPage />
 					</TabNavigator.Item>
@@ -64,8 +66,8 @@ export default class TabNavigators extends Component{
 						selected={this.state.selectedTab === 'myInfo'}
 						selectedTitleStyle={styles.selectedTextStyle}
 						titleStyle={styles.textStyle}
-						renderIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
-						renderSelectedIcon={()=> <Image style={styles.iconStyle} source={require("../Image/iconImage.png")}/>}
+						renderIcon={()=> <Icon size={29} name={'ios-person-outline'} color={ '#1E90FF'}/>}
+						renderSelectedIcon={()=> <Icon size={29} name={'ios-person'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'myInfo'})}>
 						<View style={{flex:1, justifyContent:'center'}}>
 							<Text style={{alignSelf:'center', fontSize:20}}>我的</Text>
@@ -84,10 +86,6 @@ const styles = StyleSheet.create({
 		height: 40,
 		bottom: 2,
     },  
-	iconStyle: {
-		width: 26,
-		height: 26,
-	},
 	textSyle: {
 		color: '#999',
 	},
