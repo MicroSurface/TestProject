@@ -11,6 +11,8 @@ import {
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ScrollableTabBar from 'react-native-scrollable-tab-view/ScrollableTabBar';
 
+var SubjectListView = require('../Component/SubjectListView');
+
 export default class ScrollTabBarNavigator extends Component{
 	constructor(props){
 		super(props);
@@ -23,15 +25,20 @@ export default class ScrollTabBarNavigator extends Component{
 				renderTabBar={()=> <ScrollableTabBar/>}
 				tabBarPosition='top'
 				initialPage={0}>
-				<View style={{height:100, justifyContent:'center'}} tabLabel="Matrix">
-					<Text style={{textAlign:'center'}}>Maxtix</Text>
+				<View style={{flex:1}} tabLabel="Matrix">
+					<SubjectListView subjectProps="Matrix"/>
 				</View>
-				<Text tabLabel="Game">test</Text>
-				<Text tabLabel="Hardware">game</Text>
-				<Text tabLabel="Subject">hardware</Text>
-				<Text tabLabel="Subject1">hardware</Text>
-				<Text tabLabel="Subject2">hardware</Text>
-				<Text tabLabel="Subject3">hardware</Text>
+				<View style={{flex:1}} tabLabel="专题广场">
+					<SubjectListView subjectProps="SubjectPlaza"/>
+				</View>
+				<View style={{flex:1}} tabLabel="付费栏目">
+					<SubjectListView subjectProps="ChargeSubject"/>
+				</View>
+				<Text tabLabel="效率工具">hardware</Text>
+				<Text tabLabel="手机摄影">hardware</Text>
+				<Text tabLabel="生活方式">hardware</Text>
+				<Text tabLabel="游戏">hardware</Text>
+				<Text tabLabel="硬件">hardware</Text>
 			</ScrollableTabView>
 		);
 	}
