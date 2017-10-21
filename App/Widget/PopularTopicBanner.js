@@ -32,7 +32,7 @@ export default class PopularTopicBanner extends Component {
 					<TouchableOpacity style={{height:120, width:mWidth*0.5, justifyContent:'center', alignSelf:'center'}}>
 						<Image style={{height:120, width:mWidth*0.5}} source={banner1}/>
 					</TouchableOpacity>
-					<View style={{flexDirection:'column',height:120, marginLeft:5, width:mWidth*0.5-5, backgroundColor:'#ffffff'}}>
+					<View style={{flexDirection:'column',height:120, marginLeft:5, width:mWidth*0.5-5, backgroundColor:'#f5f5f5'}}>
 						<TouchableOpacity style={{height:57.5,justifyContent:'center', alignSelf:'center'}}>
 							<Image style={{height:57.5, width:mWidth*0.5-5}} source={banner2} />
 						</TouchableOpacity>
