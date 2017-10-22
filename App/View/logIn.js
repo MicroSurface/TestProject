@@ -14,10 +14,14 @@ import {
   Modal,
   Button,
   TouchableOpacity,
+  AlertIOS,
 } from 'react-native';
 import {
   Navigator,
 } from 'react-native-deprecated-custom-components';
+
+import AV from 'leancloud-storage';
+var Item = AV.Object.extend('Item');
 
 import HomePage from './HomePage'
 import BubbleBox from '../Component/BubbleBox';
@@ -35,7 +39,9 @@ export default class LogIn extends Component {
       this.state = {
         hidden: true,
         isEmpty: true,
-        isCorrect: false
+        isCorrect: false,
+        textACT: '',
+        textPWD:''
       };
   }
 
@@ -53,13 +59,17 @@ export default class LogIn extends Component {
     if (this.state.textACT != null && this.state.textPWD != null){
       const {navigator} = this.props;
       if (navigator && this.verifyAccount() == true) {
-        navigator.push({
-          name: 'TabNavigator',
-          component: TabNavigator,
-          params: {
-            id: this.state.textACT
-          }
-        });
+        var item = new Item();
+        item.set('account', this.state.textACT);
+        item.set('password', this.state.textPWD);
+        item.save().then(function(){
+          navigator.push({
+            name: 'TabNavigator',
+            component: TabNavigator,
+          });
+        }).catch(function(e){
+          AlertIOS.alert("Save Fail", e.message);
+        })
       }else{
         this.setState({hidden: false, isEmpty: false ,isCorrect: false});
         this.timeHandler();
