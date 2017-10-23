@@ -18,6 +18,10 @@ import {
   Navigator,
 } from 'react-native-deprecated-custom-components';
 
+import AV from 'leancloud-storage';
+AV.initialize("xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz","YpykRlmTqtTSlLA1t32SywUt");
+
+
 import logIn from './App/View/logIn';
 
 
