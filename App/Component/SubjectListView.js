@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 
 import Dimensions from 'Dimensions';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const mWidth = Dimensions.get('window').width;
 
 export default class SubjectListView extends Component{
@@ -43,7 +44,6 @@ export default class SubjectListView extends Component{
 		})
 		.then((response) => response.json())
 		.then((responseData) => {
-			console.log(responseData);
 			this.setState({statistics:responseData});
 		})
 		// var response = null;
@@ -78,7 +78,13 @@ export default class SubjectListView extends Component{
 						<Image style={styles.topicImgStyle} source={{uri:rowData.topicPictureUrl}} />
 						<Text numberOfLines={5} style={styles.topicTextStyle} >{rowData.briefText}</Text>
 					</View>
-
+					{this._renderTopicSource(rowData)}
+					<View style={styles.commentStyle}>
+						<FontAwesome name={"heart-o"} size={17} color='#666666' />
+						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+						<FontAwesome name={"comment-o"} size={17} color='#666666' />
+						<Text style={styles.commentQuantityStyle}>{rowData.commentQuantity}</Text>
+					</View>
 				</View>
 			</View>
 			
@@ -89,6 +95,19 @@ export default class SubjectListView extends Component{
 		return(
 			<View style={styles.headerLineStyle} />
 		);
+	}
+
+	_renderTopicSource(rowData){
+		if(rowData.topicSource){
+			return(
+				<View style={styles.topicSourceStyle} >
+					<Text style={styles.topicSourceComeFromStyle}>来自</Text>
+					<Text style={styles.topicSourceTextStyle}>{rowData.topicSource}</Text>
+				</View>
+			)
+		}else{
+			return null;
+		}
 	}
 
 	render(){
@@ -109,7 +128,6 @@ export default class SubjectListView extends Component{
 			return(
 				<ScrollView style={styles.scrollViewStyle}
 					showsVerticalScrollIndicator={false}>
-					
 				</ScrollView>
 			)
 		}
@@ -134,7 +152,7 @@ const styles = StyleSheet.create({
 		marginTop:10,
 		marginLeft:5,
 		marginRight:5,
-		height:210,
+		height:230,
 		width:mWidth-10,
 		borderRadius:3,
 		backgroundColor:'#ffffff',
@@ -174,7 +192,7 @@ const styles = StyleSheet.create({
     	textAlign:'left'
     },
     upDateTimeStyle:{
-    	marginTop:5,
+    	marginTop:3,
     	fontSize:10,
     	color:'#666666',
     	textAlign:'left',
@@ -210,7 +228,52 @@ const styles = StyleSheet.create({
 		fontSize:13,
 		lineHeight:18,
 		color:'#222222'
+	},
+	topicSourceStyle:{
+		marginTop:0,
+		marginLeft:10,
+		height:20,
+		width:200,
+		flexDirection:'row',
+	},
+	topicSourceComeFromStyle:{
+		marginTop:0,
+		marginLeft:0,
+		fontSize:13,
+		color:'#666666',
+		textAlign:'left',
+	},
+	topicSourceTextStyle:{
+		marginTop:0,
+		marginLeft:5,
+		fontSize:13,
+		color:'#ff0000',
+		textAlign:'left',
+	},
+	commentStyle:{
+		position:'absolute',
+		right:15,
+		bottom:9,
+		height:25,
+		width:150,
+		marginRight:3,
+		justifyContent:'flex-end',
+		flexDirection:'row',
+	},
+	favoriteQuantityStyle:{
+		marginLeft:4,
+		marginRight:20,
+		fontSize:13,
+		color:'#666666',
+		textAlign:'left'
+	},
+	commentQuantityStyle:{
+		marginLeft:4,
+		fontSize:13,
+		color:'#666666',
+		textAlign:'left'
 	}
+
 })
 
 
