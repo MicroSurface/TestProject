@@ -25,6 +25,7 @@ export default class SubjectListView extends Component{
 		this.state = {
 			dataSource:ds,
 			statistics:{},
+			_isFavorite: null,
 		};
 	}
 
@@ -80,9 +81,15 @@ export default class SubjectListView extends Component{
 					</View>
 					{this._renderTopicSource(rowData)}
 					<View style={styles.commentStyle}>
-						<FontAwesome name={"heart-o"} size={17} color='#666666' />
-						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
-						<FontAwesome name={"comment-o"} size={17} color='#666666' />
+						<TouchableOpacity
+							key={rowId}
+							onPress={() => {this._refreshFavoriteStatus(rowData, rowId)}}>
+							{this._renderFavorite(rowData, rowId)}
+						</TouchableOpacity>
+						
+						<TouchableOpacity>
+							<FontAwesome name={"comment-o"} size={17} color='#666666' />
+						</TouchableOpacity>
 						<Text style={styles.commentQuantityStyle}>{rowData.commentQuantity}</Text>
 					</View>
 				</View>
@@ -108,6 +115,30 @@ export default class SubjectListView extends Component{
 		}else{
 			return null;
 		}
+	}
+
+	_refreshFavoriteStatus(rowData, rowId){
+		this.state._isFavorite = rowData.isFavorite;
+		this.setState({_isFavorite:!this.state._isFavorite});
+	}
+
+	_renderFavorite(rowData, rowId){
+		if (this.state._isFavorite){
+			return(
+				<View>
+					<FontAwesome name={"heart"} size={17} color="#ff0000" />
+					<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
+				</View>
+			)
+		}else{
+			return(
+				<View>
+					<FontAwesome name={"heart-o"} size={17} color="#666666" />
+					<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+				</View>
+			)
+		}
+
 	}
 
 	render(){
@@ -262,6 +293,7 @@ const styles = StyleSheet.create({
 	},
 	favoriteQuantityStyle:{
 		marginLeft:4,
+		marginTop:2,
 		marginRight:20,
 		fontSize:13,
 		color:'#666666',
@@ -269,6 +301,7 @@ const styles = StyleSheet.create({
 	},
 	commentQuantityStyle:{
 		marginLeft:4,
+		marginTop:2,
 		fontSize:13,
 		color:'#666666',
 		textAlign:'left'
