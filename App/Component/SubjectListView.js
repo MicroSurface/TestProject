@@ -22,10 +22,12 @@ export default class SubjectListView extends Component{
 			rowHasChanged:(r1, r2) => r1 !== r2,
 			sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
 		});
+		var getRowId = null;
 		this.state = {
 			dataSource:ds,
 			statistics:{},
 			_isFavorite: null,
+			_isClicked: false,
 		};
 	}
 
@@ -61,8 +63,7 @@ export default class SubjectListView extends Component{
 
 	}
 
-	_renderRow(rowData, rowId){
-
+	_renderRow(rowData,sectionId, rowId){
 		return(
 			<View>
 				<View style={styles.subjectListStyle}>
@@ -83,7 +84,7 @@ export default class SubjectListView extends Component{
 					<View style={styles.commentStyle}>
 						<TouchableOpacity
 							key={rowId}
-							onPress={() => {this._refreshFavoriteStatus(rowData, rowId)}}>
+							onPress={()=>{this._refreshFavorite(rowId)}}>
 							{this._renderFavorite(rowData, rowId)}
 						</TouchableOpacity>
 						
@@ -117,26 +118,47 @@ export default class SubjectListView extends Component{
 		}
 	}
 
-	_refreshFavoriteStatus(rowData, rowId){
-		this.state._isFavorite = rowData.isFavorite;
-		this.setState({_isFavorite:!this.state._isFavorite});
+	_refreshFavorite(rowId){
+		getRowId = rowId
+		this.setState({_isClicked: true});
 	}
 
+	
 	_renderFavorite(rowData, rowId){
-		if (this.state._isFavorite){
-			return(
-				<View>
-					<FontAwesome name={"heart"} size={17} color="#ff0000" />
-					<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
-				</View>
-			)
+		if (this.state._isClicked && getRowId == rowId){
+			rowData.isFavorite = ! rowData.isFavorite;
+			if (rowData.isFavorite){
+				return(
+					<View style={styles.favoriteStyle}>
+						<FontAwesome name={"heart"} size={17} color="#ff0000" />
+						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
+					</View>
+					)
+				}else{
+					return(
+						<View style={styles.favoriteStyle}>
+							<FontAwesome name={"heart-o"} size={17} color="#666666" />
+							<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+						</View>
+					)
+				}
+
 		}else{
-			return(
-				<View>
-					<FontAwesome name={"heart-o"} size={17} color="#666666" />
-					<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
-				</View>
-			)
+			if (rowData.isFavorite){
+				return(
+					<View style={styles.favoriteStyle}>
+						<FontAwesome name={"heart"} size={17} color="#ff0000" />
+						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
+					</View>
+				)
+			}else{
+				return(
+					<View style={styles.favoriteStyle}>
+						<FontAwesome name={"heart-o"} size={17} color="#666666" />
+						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+					</View>
+				)
+			}
 		}
 
 	}
@@ -149,7 +171,7 @@ export default class SubjectListView extends Component{
 					<Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/>
 					<ListView 
 						dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
-						renderRow={(rowData, rowId) => this._renderRow(rowData, rowId)} 
+						renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
 						showsVerticalScrollIndicator={false}
 						enableEmptySections={true}>
 					</ListView>
@@ -289,6 +311,9 @@ const styles = StyleSheet.create({
 		width:150,
 		marginRight:3,
 		justifyContent:'flex-end',
+		flexDirection:'row',
+	},
+	favoriteStyle:{
 		flexDirection:'row',
 	},
 	favoriteQuantityStyle:{
