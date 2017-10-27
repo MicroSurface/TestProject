@@ -26,7 +26,6 @@ export default class SubjectListView extends Component{
 		this.state = {
 			dataSource:ds,
 			statistics:{},
-			_isFavorite: null,
 			_isClicked: false,
 		};
 	}
@@ -61,6 +60,22 @@ export default class SubjectListView extends Component{
 		// this.setState({statistics:responseData});
 
 
+	}
+
+	_putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
+		let url = "https://leancloud.cn/1.1/classes/" + _items + "/" + _objectId;
+		fetch(url,{
+			method:'PUT',
+			headers:{
+				'X-LC-Id':'xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz',
+                'X-LC-Key':'YpykRlmTqtTSlLA1t32SywUt',
+                'Content-Type':'application/json',
+			},
+			body: JSON.stringify({
+		        'isFavorite': _isFavorite,
+		        'favoriteQuantity': _isFavorite ? _favoriteQuantity+1 : _favoriteQuantity ,
+		    })
+		})
 	}
 
 	_renderRow(rowData,sectionId, rowId){
@@ -127,6 +142,7 @@ export default class SubjectListView extends Component{
 	_renderFavorite(rowData, rowId){
 		if (this.state._isClicked && getRowId == rowId){
 			rowData.isFavorite = ! rowData.isFavorite;
+			this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, rowData.favoriteQuantity);
 			if (rowData.isFavorite){
 				return(
 					<View style={styles.favoriteStyle}>
@@ -148,7 +164,7 @@ export default class SubjectListView extends Component{
 				return(
 					<View style={styles.favoriteStyle}>
 						<FontAwesome name={"heart"} size={17} color="#ff0000" />
-						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
+						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
 					</View>
 				)
 			}else{
@@ -162,6 +178,7 @@ export default class SubjectListView extends Component{
 		}
 
 	}
+
 
 	render(){
 		if (this.props.subjectProps == "Matrix"){
