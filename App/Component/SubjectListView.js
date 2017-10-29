@@ -15,6 +15,8 @@ import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const mWidth = Dimensions.get('window').width;
 
+var isFirstFavorite = false;
+
 export default class SubjectListView extends Component{
 	constructor(props){
 		super(props);
@@ -27,6 +29,7 @@ export default class SubjectListView extends Component{
 			dataSource:ds,
 			statistics:{},
 			_isClicked: false,
+			isNotFirstLoaded: false,
 		};
 	}
 
@@ -73,7 +76,7 @@ export default class SubjectListView extends Component{
 			},
 			body: JSON.stringify({
 		        'isFavorite': _isFavorite,
-		        'favoriteQuantity': _isFavorite ? _favoriteQuantity+1 : _favoriteQuantity ,
+		        'favoriteQuantity': _isFavorite ? _favoriteQuantity+1 : _favoriteQuantity-1 ,
 		    })
 		})
 	}
@@ -135,48 +138,59 @@ export default class SubjectListView extends Component{
 
 	_refreshFavorite(rowId){
 		getRowId = rowId
-		this.setState({_isClicked: true});
+		this.setState({_isClicked: true, isNotFirstLoaded: true});
 	}
 
 	
 	_renderFavorite(rowData, rowId){
-		if (this.state._isClicked && getRowId == rowId){
-			rowData.isFavorite = ! rowData.isFavorite;
-			this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, rowData.favoriteQuantity);
-			if (rowData.isFavorite){
-				return(
-					<View style={styles.favoriteStyle}>
-						<FontAwesome name={"heart"} size={17} color="#ff0000" />
-						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity+1}</Text>
-					</View>
+		if (this.state.isNotFirstLoaded){
+			if (getRowId == rowId){
+				rowData.isFavorite = ! rowData.isFavorite;
+				this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, rowData.favoriteQuantity);
+				if (isFirstFavorite){
+					return(
+						<View style={styles.favoriteStyle}>
+							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
+							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity : rowData.favoriteQuantity-1}</Text>
+						</View>
 					)
 				}else{
 					return(
 						<View style={styles.favoriteStyle}>
-							<FontAwesome name={"heart-o"} size={17} color="#666666" />
-							<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
+							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity+1 : rowData.favoriteQuantity}</Text>
 						</View>
 					)
 				}
-
+			}else{
+				if (isFirstFavorite){
+					return(
+						<View style={styles.favoriteStyle}>
+							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
+							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity : rowData.favoriteQuantity-1}</Text>
+						</View>
+					)
+				}else{
+					return(
+						<View style={styles.favoriteStyle}>
+							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
+							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity+1 : rowData.favoriteQuantity }</Text>
+						</View>
+					)
+				}
+				
+			}
 		}else{
 			if (rowData.isFavorite){
-				return(
-					<View style={styles.favoriteStyle}>
-						<FontAwesome name={"heart"} size={17} color="#ff0000" />
-						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
-					</View>
-				)
-			}else{
-				return(
-					<View style={styles.favoriteStyle}>
-						<FontAwesome name={"heart-o"} size={17} color="#666666" />
-						<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
-					</View>
-				)
+				isFirstFavorite = true;
 			}
+			return(
+				<View style={styles.favoriteStyle}>
+					<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
+					<Text style={styles.favoriteQuantityStyle}>{rowData.favoriteQuantity}</Text>
+				</View>
+			)
 		}
-
 	}
 
 
