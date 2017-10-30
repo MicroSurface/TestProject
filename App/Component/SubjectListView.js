@@ -11,9 +11,12 @@ import {
     View
 } from 'react-native'
 
+import styles from '../CSS/SubjectListViewStyle';
 import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-const mWidth = Dimensions.get('window').width;
+
+var SubjectPlazaListView = require('./SubjectPlazaListView');
+
 var arr = [];
 
 export default class SubjectListView extends Component{
@@ -209,163 +212,18 @@ export default class SubjectListView extends Component{
 					</ListView>
 				</ScrollView>
 			);
+		}else if (this.props.subjectProps == "SubjectPlaza"){
+			return(
+				<SubjectPlazaListView subjectProps = "SubjectPlaza" />
+			)
 		}else{
 			return(
-				<ScrollView style={styles.scrollViewStyle}
-					showsVerticalScrollIndicator={false}>
-				</ScrollView>
+				null
 			)
 		}
 	}
 
 
 }
-
-const styles = StyleSheet.create({
-	scrollViewStyle:{
-		position:'absolute',
-		top:0,
-		bottom:0,
-		backgroundColor:'#f5f5f5',
-	},
-	subjectBannerStyle:{
-		marginTop:0,
-		height:150,
-		width:mWidth,
-	},
-	subjectListStyle:{
-		marginTop:10,
-		marginLeft:5,
-		marginRight:5,
-		height:230,
-		width:mWidth-10,
-		borderRadius:3,
-		backgroundColor:'#ffffff',
-	},
-	headTitleStyle:{
-		height:50,
-		width:mWidth-10,
-		backgroundColor:'#ffffff',
-		flexDirection:'row',
-		justifyContent:'flex-start',
-	},
-	headImgStyle:{
-		marginTop:10,
-		marginLeft:10,
-		height:30,
-		width:30,
-		borderRadius:15,
-	},
-	
-	headerLineStyle:{
-        marginTop:0, 
-        width:mWidth-10, 
-        height:1, 
-        backgroundColor:'#dfdfdf'
-    },
-    userStyle:{
-    	marginTop:0,
-    	marginLeft:15,
-    	height:40,
-    	width:200,
-    	flexDirection:'column',
-    },
-    nickNameStyle:{
-    	marginTop:10,
-    	fontSize:14,
-    	color:'#222222',
-    	textAlign:'left'
-    },
-    upDateTimeStyle:{
-    	marginTop:3,
-    	fontSize:10,
-    	color:'#666666',
-    	textAlign:'left',
-    },
-    topicTitleStyle:{
-    	marginTop:10,
-    	marginLeft:10,
-    	marginRight:30,
-    	height:20,
-    	fontSize:16,
-    	fontWeight:'bold',
-    	color:'#222222',
-    },
-    topicStyle:{
-    	marginTop:0,
-    	marginLeft:10,
-    	marginRight:10,
-    	height:120,
-    	flexDirection:'row'
-    },
-    topicImgStyle:{
-		marginTop:10,
-		marginLeft:0,
-		height:100,
-		width:100,
-		borderRadius:3,
-	},
-	topicTextStyle:{
-		marginTop:10,
-		marginLeft:15,
-		height:100,
-		width:220,
-		fontSize:13,
-		lineHeight:18,
-		color:'#222222'
-	},
-	topicSourceStyle:{
-		marginTop:0,
-		marginLeft:10,
-		height:20,
-		width:200,
-		flexDirection:'row',
-	},
-	topicSourceComeFromStyle:{
-		marginTop:0,
-		marginLeft:0,
-		fontSize:13,
-		color:'#666666',
-		textAlign:'left',
-	},
-	topicSourceTextStyle:{
-		marginTop:0,
-		marginLeft:5,
-		fontSize:13,
-		color:'#ff0000',
-		textAlign:'left',
-	},
-	commentStyle:{
-		position:'absolute',
-		right:15,
-		bottom:9,
-		height:25,
-		width:150,
-		marginRight:3,
-		justifyContent:'flex-end',
-		flexDirection:'row',
-	},
-	favoriteStyle:{
-		flexDirection:'row',
-	},
-	favoriteQuantityStyle:{
-		marginLeft:4,
-		marginTop:2,
-		marginRight:20,
-		fontSize:13,
-		color:'#666666',
-		textAlign:'left'
-	},
-	commentQuantityStyle:{
-		marginLeft:4,
-		marginTop:2,
-		fontSize:13,
-		color:'#666666',
-		textAlign:'left'
-	}
-
-})
-
-
 
 module.exports = SubjectListView;
