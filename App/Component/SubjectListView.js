@@ -14,8 +14,7 @@ import {
 import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const mWidth = Dimensions.get('window').width;
-
-var isFirstFavorite = false;
+var arr = [];
 
 export default class SubjectListView extends Component{
 	constructor(props){
@@ -146,7 +145,7 @@ export default class SubjectListView extends Component{
 		if (this.state.isNotFirstLoaded){
 			if (getRowId == rowId){
 				rowData.isFavorite = ! rowData.isFavorite;
-				if (isFirstFavorite){
+				if (arr[rowId]){
 					let quantity = rowData.isFavorite ? rowData.favoriteQuantity : rowData.favoriteQuantity-1;
 					this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, quantity);
 					return(
@@ -166,7 +165,7 @@ export default class SubjectListView extends Component{
 					)
 				}
 			}else{
-				if (isFirstFavorite){
+				if (arr[rowId]){
 					return(
 						<View style={styles.favoriteStyle}>
 							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
@@ -184,9 +183,8 @@ export default class SubjectListView extends Component{
 				
 			}
 		}else{
-			if (rowData.isFavorite){
-				isFirstFavorite = true;
-			}
+			let isFirstFavorite = rowData.isFavorite ? true : false;
+			arr.push(isFirstFavorite);
 			return(
 				<View style={styles.favoriteStyle}>
 					<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
