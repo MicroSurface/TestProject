@@ -76,7 +76,7 @@ export default class SubjectListView extends Component{
 			},
 			body: JSON.stringify({
 		        'isFavorite': _isFavorite,
-		        'favoriteQuantity': _isFavorite ? _favoriteQuantity+1 : _favoriteQuantity-1 ,
+		        'favoriteQuantity': _favoriteQuantity ,
 		    })
 		})
 	}
@@ -146,19 +146,22 @@ export default class SubjectListView extends Component{
 		if (this.state.isNotFirstLoaded){
 			if (getRowId == rowId){
 				rowData.isFavorite = ! rowData.isFavorite;
-				this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, rowData.favoriteQuantity);
 				if (isFirstFavorite){
+					let quantity = rowData.isFavorite ? rowData.favoriteQuantity : rowData.favoriteQuantity-1;
+					this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, quantity);
 					return(
 						<View style={styles.favoriteStyle}>
 							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
-							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity : rowData.favoriteQuantity-1}</Text>
+							<Text style={styles.favoriteQuantityStyle}>{quantity}</Text>
 						</View>
 					)
 				}else{
+					let quantity = rowData.isFavorite ? rowData.favoriteQuantity+1 : rowData.favoriteQuantity;
+					this._putFavoriteStatus(rowData.objectId, rowData.isFavorite, this.props.subjectProps, quantity);
 					return(
 						<View style={styles.favoriteStyle}>
 							<FontAwesome name={rowData.isFavorite ? "heart" : "heart-o"} size={17} color={rowData.isFavorite ? "#ff0000" : "#666666"} />
-							<Text style={styles.favoriteQuantityStyle}>{rowData.isFavorite ? rowData.favoriteQuantity+1 : rowData.favoriteQuantity}</Text>
+							<Text style={styles.favoriteQuantityStyle}>{quantity}</Text>
 						</View>
 					)
 				}
