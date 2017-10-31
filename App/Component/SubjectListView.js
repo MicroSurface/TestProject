@@ -15,9 +15,10 @@ import styles from '../CSS/SubjectListViewStyle';
 import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-var SubjectPlazaListView = require('./SubjectPlazaListView');
+var SubjectPlazaListView = require('../View/SubjectPlazaListView');
 
 var arr = [];
+var hasBanner = null;
 
 export default class SubjectListView extends Component{
 	constructor(props){
@@ -197,29 +198,33 @@ export default class SubjectListView extends Component{
 		}
 	}
 
+	_renderMainPage(_hasBanner){
+		return(
+			<ScrollView style={styles.scrollViewStyle}
+				showsVerticalScrollIndicator={false}>
+				{ _hasBanner ? <Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/> : null}
+				<ListView 
+					dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
+					renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
+					showsVerticalScrollIndicator={false}
+					enableEmptySections={true}>
+				</ListView>
+			</ScrollView>
+		)
+	}
 
 	render(){
-		if (this.props.subjectProps == "Matrix"){
-			return(
-				<ScrollView style={styles.scrollViewStyle}
-					showsVerticalScrollIndicator={false}>
-					<Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/>
-					<ListView 
-						dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
-						renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
-						showsVerticalScrollIndicator={false}
-						enableEmptySections={true}>
-					</ListView>
-				</ScrollView>
-			);
-		}else if (this.props.subjectProps == "SubjectPlaza"){
-			return(
-				<SubjectPlazaListView subjectProps = "SubjectPlaza" />
-			)
-		}else{
-			return(
-				null
-			)
+		switch(this.props.subjectProps){
+			case "Matrix":
+				hasBanner = true;
+				return this._renderMainPage(hasBanner);
+			case "SubjectPlaza":
+				return(
+					<SubjectPlazaListView subjectProps = "SubjectPlaza" />
+				);
+			default:
+				hasBanner = false;
+				return this._renderMainPage(hasBanner);
 		}
 	}
 
