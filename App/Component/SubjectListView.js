@@ -16,6 +16,7 @@ import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 var SubjectPlazaListView = require('../View/SubjectPlazaListView');
+var ChargeSubjectListView = require('../View/ChargeSubjectListView');
 
 var arr = [];
 var hasBanner = null;
@@ -222,6 +223,10 @@ export default class SubjectListView extends Component{
 				return(
 					<SubjectPlazaListView subjectProps = "SubjectPlaza" />
 				);
+			case "ChargeSubject":
+				return(
+					<ChargeSubjectListView subjectProps = "ChargeSubject" />
+				) 
 			default:
 				hasBanner = false;
 				return this._renderMainPage(hasBanner);
