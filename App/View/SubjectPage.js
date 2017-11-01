@@ -8,13 +8,13 @@ import {
     Image,
     Button,
     ScrollView,
-    View
+    View,
+    Platform,
 } from 'react-native'
 
 import Dimensions from 'Dimensions';
 
-var ScrollTabBarNavigator = require('../Component/ScrollTabBarNavigator');
-
+import ScrollTabBarNavigator from '../Component/ScrollTabBarNavigator';
 const mWidth = Dimensions.get('window').width;
 
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     containerStyle:{
         flex:1,
         position:'absolute', 
-        top:20, 
+        top:(Platform.OS == 'ios') ? 20 : 0, 
         bottom:50, 
         backgroundColor:'#f5f5f5',
     },

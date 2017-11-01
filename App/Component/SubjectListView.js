@@ -16,8 +16,8 @@ import styles from '../CSS/SubjectListViewStyle';
 import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-var SubjectPlazaListView = require('../View/SubjectPlazaListView');
-var ChargeSubjectListView = require('../View/ChargeSubjectListView');
+import SubjectPlazaListView from '../View/SubjectPlazaListView';
+import ChargeSubjectListView from '../View/ChargeSubjectListView';
 
 var arr = [];
 var hasBanner = null;
@@ -92,34 +92,32 @@ export default class SubjectListView extends Component{
 
 	_renderRow(rowData,sectionId, rowId){
 		return(
-			<View>
-				<View style={styles.subjectListStyle}>
-					<View style={styles.headTitleStyle} >
-						<Image style={styles.headImgStyle} source={{uri:rowData.headImageUrl}} />
-						<View style={styles.userStyle} >
-							<Text style={styles.nickNameStyle}>{rowData.userNickName}</Text>
-							<Text style={styles.upDateTimeStyle}>{rowData.publishDate.iso}</Text>
-						</View>
+			<View style={styles.subjectListStyle}>
+				<View style={styles.headTitleStyle} >
+					<Image style={styles.headImgStyle} source={{uri:rowData.headImageUrl}} />
+					<View style={styles.userStyle} >
+						<Text style={styles.nickNameStyle}>{rowData.userNickName}</Text>
+						<Text style={styles.upDateTimeStyle}>{rowData.publishDate.iso}</Text>
 					</View>
-					{this._renderLine()}
-					<Text numberOfLines={1} style={styles.topicTitleStyle}>{rowData.topicTitle}</Text>
-					<View style={styles.topicStyle}>
-						<Image style={styles.topicImgStyle} source={{uri:rowData.topicPictureUrl}} />
-						<Text numberOfLines={5} style={styles.topicTextStyle} >{rowData.briefText}</Text>
-					</View>
-					{this._renderTopicSource(rowData)}
-					<View style={styles.commentStyle}>
-						<TouchableOpacity
-							key={rowId}
-							onPress={()=>{this._refreshFavorite(rowId)}}>
-							{this._renderFavorite(rowData, rowId)}
-						</TouchableOpacity>
-						
-						<TouchableOpacity>
-							<FontAwesome name={"comment-o"} size={17} color='#666666' />
-						</TouchableOpacity>
-						<Text style={styles.commentQuantityStyle}>{rowData.commentQuantity}</Text>
-					</View>
+				</View>
+				{this._renderLine()}
+				<Text numberOfLines={1} style={styles.topicTitleStyle}>{rowData.topicTitle}</Text>
+				<View style={styles.topicStyle}>
+					<Image style={styles.topicImgStyle} source={{uri:rowData.topicPictureUrl}} />
+					<Text numberOfLines={5} style={styles.topicTextStyle} >{rowData.briefText}</Text>
+				</View>
+				{this._renderTopicSource(rowData)}
+				<View style={styles.commentStyle}>
+					<TouchableOpacity
+						key={rowId}
+						onPress={()=>{this._refreshFavorite(rowId)}}>
+						{this._renderFavorite(rowData, rowId)}
+					</TouchableOpacity>
+					
+					<TouchableOpacity>
+						<FontAwesome name={"comment-o"} size={17} color='#666666' />
+					</TouchableOpacity>
+					<Text style={styles.commentQuantityStyle}>{rowData.commentQuantity}</Text>
 				</View>
 			</View>
 			
@@ -217,7 +215,9 @@ export default class SubjectListView extends Component{
 					dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
 					renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
 					showsVerticalScrollIndicator={false}
-					enableEmptySections={true}>
+					enableEmptySections={true}
+					initialListSize={1}
+					pageSize={1}>
 				</ListView>
 			</ScrollView>
 		)
@@ -228,14 +228,17 @@ export default class SubjectListView extends Component{
 			case "Matrix":
 				hasBanner = true;
 				return this._renderMainPage(hasBanner);
+				break;
 			case "SubjectPlaza":
 				return(
 					<SubjectPlazaListView subjectProps = "SubjectPlaza" />
 				);
+				break;
 			case "ChargeSubject":
 				return(
 					<ChargeSubjectListView subjectProps = "ChargeSubject" />
-				) 
+				);
+				break;
 			default:
 				hasBanner = false;
 				return this._renderMainPage(hasBanner);
