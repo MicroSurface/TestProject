@@ -18,9 +18,13 @@ This Repository provides the test codes and awesome functions
 
 	8. Add ListView & Add More Banners
 
-	9. Banenr Optimization & ListView Header 
+	9. Banner Optimization & ListView Header 
 
 	10. Optimize Data Structure & ListView Adjustion
 
 	11. Add Subject Page
+
+	12. Add upvote function
+
+	14. Add refresh component
 
