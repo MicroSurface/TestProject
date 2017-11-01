@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Navigator,
     ListView,
+    RefreshControl,
     TouchableOpacity,
     Text,
     Image,
@@ -34,6 +35,7 @@ export default class SubjectListView extends Component{
 			statistics:{},
 			_isClicked: false,
 			isNotFirstLoaded: false,
+			refreshing:true,
 		};
 	}
 
@@ -53,7 +55,7 @@ export default class SubjectListView extends Component{
 		})
 		.then((response) => response.json())
 		.then((responseData) => {
-			this.setState({statistics:responseData});
+			this.setState({statistics:responseData, refreshing:false});
 		})
 		// var response = null;
 		// if(this.props.subjectProps == "Matrix"){
@@ -202,6 +204,10 @@ export default class SubjectListView extends Component{
 	_renderMainPage(_hasBanner){
 		return(
 			<ScrollView style={styles.scrollViewStyle}
+				refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={()=>this._fetchData()} />}
 				showsVerticalScrollIndicator={false}>
 				{ _hasBanner ? <Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/> : null}
 				<ListView 

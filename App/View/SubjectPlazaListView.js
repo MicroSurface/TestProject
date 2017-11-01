@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Navigator,
     ListView,
+    RefreshControl,
     TouchableOpacity,
     Text,
     Image,
@@ -26,6 +27,7 @@ export default class SubjectPlazaListView extends Component {
 		this.state = {
 			dataSource:ds,
 			statistics:{},
+			refreshing:true,
 		};
 	};
 
@@ -45,7 +47,7 @@ export default class SubjectPlazaListView extends Component {
 		})
 		.then((response) => response.json())
 		.then((responseData) => {
-			this.setState({statistics:responseData});
+			this.setState({statistics:responseData, refreshing:false});
 		})
 	}
 
@@ -66,7 +68,11 @@ export default class SubjectPlazaListView extends Component {
 	render(){
 		return(
 			<View style={styles.listViewStyle}>
-				<ListView 
+				<ListView
+					 refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={()=>this._getSubjectPlazaData()} />} 
 					dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
 					renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, sectionId, rowId)}
 					showsVerticalScrollIndicator={false}
