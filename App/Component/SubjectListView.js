@@ -57,6 +57,9 @@ export default class SubjectListView extends Component{
 		.then((responseData) => {
 			this.setState({statistics:responseData, refreshing:false});
 		})
+		.catch((err) => {
+			this.setState({refreshing:false});
+		})
 		// var response = null;
 		// if(this.props.subjectProps == "Matrix"){
 		// 	response = require('../Statistics/SubjectItemData_Matrix');

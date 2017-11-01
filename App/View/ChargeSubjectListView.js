@@ -50,6 +50,9 @@ export default class ChargeSubjectListView extends Component {
         .then((responseData) => {
             this.setState({statistics:responseData, refreshing:false})
         })
+        .catch((err) => {
+            this.setState({refreshing:false});
+        })
     }
 
     

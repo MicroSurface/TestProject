@@ -49,6 +49,9 @@ export default class SubjectPlazaListView extends Component {
 		.then((responseData) => {
 			this.setState({statistics:responseData, refreshing:false});
 		})
+		.catch((err) => {
+			this.setState({refreshing:false});
+		})
 	}
 
 	_renderRow(rowData, sectionId, rowId){
