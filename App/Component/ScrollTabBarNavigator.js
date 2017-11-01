@@ -34,11 +34,18 @@ export default class ScrollTabBarNavigator extends Component{
 				<View style={{flex:1}} tabLabel="付费栏目">
 					<SubjectListView subjectProps="ChargeSubject"/>
 				</View>
-				<Text tabLabel="效率工具">hardware</Text>
-				<Text tabLabel="手机摄影">hardware</Text>
-				<Text tabLabel="生活方式">hardware</Text>
-				<Text tabLabel="游戏">hardware</Text>
-				<Text tabLabel="硬件">hardware</Text>
+				<View style={{flex:1}} tabLabel="效率工具">
+					<SubjectListView subjectProps="EfficiencyTools"/>
+				</View>
+				<View style={{flex:1}} tabLabel="手机摄影">
+					<SubjectListView subjectProps="MobilePhotograph"/>
+				</View>
+				<View style={{flex:1}} tabLabel="游戏">
+					<SubjectListView subjectProps="Game"/>
+				</View>
+				<View style={{flex:1}} tabLabel="硬件">
+					<SubjectListView subjectProps="Hardware"/>
+				</View>
 			</ScrollableTabView>
 		);
 	}
