@@ -19,11 +19,13 @@ export default class NoNetworkRemindPage extends Component {
     }
 
     render(){
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.refreshButtonStyle}>
-
-            </TouchableOpacity>
-        </View>
+        return(
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.refreshButtonStyle}>
+                    <Text style={{fontSize:20, color:'#ff0000', textAlign:'center'}}>刷新</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 }
 
