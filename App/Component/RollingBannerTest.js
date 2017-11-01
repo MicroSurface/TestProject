@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
-var Indicator = require('./Indicator');
+import Indicator from './Indicator';
 
 const mWidth = Dimensions.get('window').width;
 const mHeight = Dimensions.get('window').height;
@@ -54,7 +54,7 @@ export default class RollingBannerTest extends Component {
 		}
 		return arr;
 	}
-	
+
 	onScroll(event) {
 		let offsetX = event.nativeEvent.contentOffset.x;
 		this.nextPage = Math.round(offsetX / mWidth);
@@ -95,7 +95,8 @@ export default class RollingBannerTest extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View 
+				style={styles.container}>
 				<ScrollView
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}

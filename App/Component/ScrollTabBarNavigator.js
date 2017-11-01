@@ -11,7 +11,7 @@ import {
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ScrollableTabBar from 'react-native-scrollable-tab-view/ScrollableTabBar';
 
-var SubjectListView = require('../Component/SubjectListView');
+import SubjectListView from '../Component/SubjectListView';
 
 export default class ScrollTabBarNavigator extends Component{
 	constructor(props){

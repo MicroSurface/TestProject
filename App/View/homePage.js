@@ -29,10 +29,11 @@ import pic5 from '../Image/Scence5.jpg';
 
 import headShade from '../Image/Icons/icon_headshade03.png';
 
-var RollingBannerTest = require('../Component/RollingBannerTest');
-var TabNavigators = require('../Component/TabNavigator');
-var QuickVisitBanner = require('../Component/QuickVisitBanner');
-var PopularTopicBanner = require('../Widget/PopularTopicBanner');
+import RollingBannerTest from '../Component/RollingBannerTest';
+import TabNavigators from '../Component/TabNavigator';
+import QuickVisitBanner from '../Component/QuickVisitBanner';
+import PopularTopicBanner from '../Widget/PopularTopicBanner';
+
 var picList = [pic1, pic2, pic3, pic4, pic5];
 
 const mWidth = Dimensions.get('window').width;
