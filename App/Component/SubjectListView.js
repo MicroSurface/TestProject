@@ -3,6 +3,7 @@ import {
     StyleSheet,
     Navigator,
     ListView,
+    NetInfo,
     RefreshControl,
     TouchableOpacity,
     Text,
@@ -18,9 +19,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import SubjectPlazaListView from '../View/SubjectPlazaListView';
 import ChargeSubjectListView from '../View/ChargeSubjectListView';
+import NoNetworkRemindPage from '../Component/NoNetworkRemindPage';
 
 var arr = [];
 var hasBanner = null;
+var hasConnected = false;
 
 export default class SubjectListView extends Component{
 	constructor(props){
@@ -40,7 +43,21 @@ export default class SubjectListView extends Component{
 	}
 
 	componentDidMount(){
-		this._fetchData();
+		//检查网络状态
+		NetInfo.isConnected.fetch().done((isConnected) => {
+			NetInfo.addEventListener(
+				'change',
+				this.handleConnectivityChange,
+				this._fetchData()
+			);
+		})		
+	}
+
+	handleConnectivityChange(isConnected){
+		NetInfo.removeEventListener(
+			'change',
+			this.handleConnectivityChange
+		)
 	}
 
 	_fetchData(){
@@ -244,8 +261,6 @@ export default class SubjectListView extends Component{
 				return this._renderMainPage(hasBanner);
 		}
 	}
-
-
 }
 
 module.exports = SubjectListView;
