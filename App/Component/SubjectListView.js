@@ -17,6 +17,7 @@ import styles from '../CSS/SubjectListViewStyle';
 import Dimensions from 'Dimensions';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import SubjectItemsData from '../Service/SubjectService';
 import SubjectPlazaListView from '../View/SubjectPlazaListView';
 import ChargeSubjectListView from '../View/ChargeSubjectListView';
 import NoNetworkRemindPage from '../Component/NoNetworkRemindPage';
@@ -24,6 +25,7 @@ import NoNetworkRemindPage from '../Component/NoNetworkRemindPage';
 var arr = [];
 var hasBanner = null;
 var hasConnected = false;
+var subjectItemsData = new SubjectItemsData();
 
 export default class SubjectListView extends Component{
 	constructor(props){
@@ -44,13 +46,14 @@ export default class SubjectListView extends Component{
 
 	componentDidMount(){
 		//检查网络状态
-		NetInfo.isConnected.fetch().done((isConnected) => {
-			NetInfo.addEventListener(
-				'change',
-				this.handleConnectivityChange,
-				this._fetchData()
-			);
-		})		
+		// NetInfo.isConnected.fetch().done((isConnected) => {
+		// 	NetInfo.addEventListener(
+		// 		'change',
+		// 		this.handleConnectivityChange,
+		
+		this._fetchData();
+		// 	);
+		// })		
 	}
 
 	handleConnectivityChange(isConnected){
@@ -60,51 +63,17 @@ export default class SubjectListView extends Component{
 		)
 	}
 
-	_fetchData(){
-		let url = "https://leancloud.cn/1.1/classes/" + this.props.subjectProps;
-		fetch(url,{
-			method:'GET',
-			headers:{
-				'X-LC-Id':'xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz',
-                'X-LC-Key':'YpykRlmTqtTSlLA1t32SywUt',
-                'Content-Type':'application/json',
-			},
-		})
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({statistics:responseData, refreshing:false});
-		})
-		.catch((err) => {
+	async _fetchData(){
+		var result = await subjectItemsData.getItemsData(this.props.subjectProps);
+		if (result){
+			this.setState({statistics:result, refreshing:false});
+		}else{
 			this.setState({refreshing:false});
-		})
-		// var response = null;
-		// if(this.props.subjectProps == "Matrix"){
-		// 	response = require('../Statistics/SubjectItemData_Matrix');
-		// }else if(this.props.subjectProps == "SubjectPlaza"){
-		// 	response = require('../Statistics/SubjectItemData_SubjectPlaza');
-		// }else{
-		// 	response = require('../Statistics/SubjectItemData_ChargeSubject');
-		// }
-		// let responseData = response.result;
-		// this.setState({statistics:responseData});
-
-
+		}
 	}
 
 	_putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
-		let url = "https://leancloud.cn/1.1/classes/" + _items + "/" + _objectId;
-		fetch(url,{
-			method:'PUT',
-			headers:{
-				'X-LC-Id':'xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz',
-                'X-LC-Key':'YpykRlmTqtTSlLA1t32SywUt',
-                'Content-Type':'application/json',
-			},
-			body: JSON.stringify({
-		        'isFavorite': _isFavorite,
-		        'favoriteQuantity': _favoriteQuantity ,
-		    })
-		})
+		var result = subjectItemsData.putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity);
 	}
 
 	_renderRow(rowData,sectionId, rowId){
@@ -225,6 +194,8 @@ export default class SubjectListView extends Component{
 				refreshControl={
                     <RefreshControl
                         refreshing={this.state.refreshing}
+                        tintColor={'#ff0000'}
+                        title={'下拉刷新'}
                         onRefresh={()=>this._fetchData()} />}
 				showsVerticalScrollIndicator={false}>
 				{ _hasBanner ? <Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/> : null}
