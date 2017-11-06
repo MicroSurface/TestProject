@@ -14,7 +14,9 @@ import {
 } from 'react-native'
 
 import Dimensions from 'Dimensions';
+import SubjectItemsData from '../Service/SubjectService';
 const mWidth = Dimensions.get('window').width;
+var subjectItemsData = new SubjectItemsData();
 
 export default class SubjectPlazaListView extends Component {
 	constructor(props){
@@ -35,23 +37,13 @@ export default class SubjectPlazaListView extends Component {
 		this._getSubjectPlazaData();
 	};
 
-	_getSubjectPlazaData(){
-		let url = "https://leancloud.cn/1.1/classes/SubjectPlaza";
-		fetch(url,{
-			method:'GET',
-			headers:{
-				'X-LC-Id':'xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz',
-                'X-LC-Key':'YpykRlmTqtTSlLA1t32SywUt',
-                'Content-Type':'application/json',
-			},
-		})
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({statistics:responseData, refreshing:false});
-		})
-		.catch((err) => {
+	async _getSubjectPlazaData(){
+		var result = await subjectItemsData.getSubjectPlazaData();
+		if (result.status == 200 && result.success){
+			this.setState({statistics:result.responseData, refreshing:false});
+		}else{
 			this.setState({refreshing:false});
-		})
+		}
 	}
 
 	_renderRow(rowData, sectionId, rowId){
