@@ -33,6 +33,8 @@ import RollingBannerTest from '../Component/RollingBannerTest';
 import TabNavigators from '../Component/TabNavigator';
 import QuickVisitBanner from '../Component/QuickVisitBanner';
 import PopularTopicBanner from '../Widget/PopularTopicBanner';
+import TitleNavigator from '../Component/TitleNavigator';
+
 
 var picList = [pic1, pic2, pic3, pic4, pic5];
 
@@ -206,24 +208,28 @@ export default class HomePage extends Component {
 
     render() {
         return (
-            <ScrollView
-                style={styles.scrollViewStyle}
-                showsVerticalScrollIndicator={false}>
-                <RollingBannerTest bannerList={[pic1,pic2,pic3,pic4]} />
-                <QuickVisitBanner  iconList={[
-                    {image:icon1,titles:"回答"},
-                    {image:icon2,titles:"视频"},
-                    {image:icon3,titles:"专栏"},
-                    {image:icon4,titles:"收藏夹"},
-                    {image:icon5,titles:"我的积分"}]}/>
-                <PopularTopicBanner />
-                <ListView
-                    dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
-                    renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, rowId, sectionId)}
-                    showsVerticalScrollIndicator={false}
-                    enableEmptySections={true}>
-                </ListView>
-            </ScrollView>            
+            <View style={{flex:1}}>
+                <TitleNavigator title={this.props.title} />
+                <View style={styles.scrollViewStyle}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}>
+                        <RollingBannerTest bannerList={[pic1,pic2,pic3,pic4]} />
+                        <QuickVisitBanner  iconList={[
+                            {image:icon1,titles:"回答"},
+                            {image:icon2,titles:"视频"},
+                            {image:icon3,titles:"专栏"},
+                            {image:icon4,titles:"收藏夹"},
+                            {image:icon5,titles:"我的积分"}]}/>
+                        <PopularTopicBanner />
+                        <ListView
+                            dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
+                            renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, rowId, sectionId)}
+                            showsVerticalScrollIndicator={false}
+                            enableEmptySections={true}>
+                        </ListView>
+                    </ScrollView>
+                </View>
+            </View>            
         );
     }
 }

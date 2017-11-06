@@ -9,10 +9,9 @@ const mWidth = Dimensions.get('window').width;
 
 var styles = StyleSheet.create({
     scrollViewStyle:{
-        position:'absolute',
         flex:1,
-        top:(Platform.OS == 'ios') ? 20 : 0,
-        bottom:50,
+        marginTop:0,
+        bottom:0,
         backgroundColor:'#f5f5f5'
     },
     headerStyle:{

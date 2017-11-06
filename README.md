@@ -26,5 +26,11 @@ This Repository provides the test codes and awesome functions
 
 	12. Add upvote function
 
-	14. Add refresh component
+	13. Add refresh component
+
+	14. Optimize the Http Service
+
+	15. Add Title Navigator
+
+
 
