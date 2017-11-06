@@ -15,6 +15,7 @@ import {
 import Dimensions from 'Dimensions';
 
 import ScrollTabBarNavigator from '../Component/ScrollTabBarNavigator';
+import TitleNavigator from '../Component/TitleNavigator';
 const mWidth = Dimensions.get('window').width;
 
 
@@ -29,8 +30,11 @@ export default class SubjectPage extends Component{
 
     render() {
         return (
-            <View style={styles.containerStyle}>
-                <ScrollTabBarNavigator/>
+            <View style={{flex:1}}>
+                <TitleNavigator title={this.props.title}/>
+                <View style={styles.containerStyle}>
+                    <ScrollTabBarNavigator/>
+                </View>
             </View>
         );
     }
@@ -40,13 +44,8 @@ export default class SubjectPage extends Component{
 const styles = StyleSheet.create({
     containerStyle:{
         flex:1,
-        position:'absolute', 
-        top:(Platform.OS == 'ios') ? 20 : 0, 
-        bottom:50, 
+        marginTop:0, 
+        bottom:0, 
         backgroundColor:'#f5f5f5',
     },
-    scrollViewStyle:{
-        backgroundColor:'#FFE4B5', 
-        width:mWidth*0.25,
-    }
 })

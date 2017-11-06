@@ -23,7 +23,7 @@ export default class TabNavigators extends Component{
 	constructor (props){
 		super(props);
 		this.state = {
-			selectedTab: 'home'
+			selectedTab: 'subject'
 		};
 	}
 
@@ -39,7 +39,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Icon size={28} name={'ios-home-outline'} color={ '#1E90FF'}/>}
 						renderSelectedIcon={()=> <Icon size={28} name={'ios-home'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'home'})}>
-						<HomePage />
+						<HomePage title='首页'/>
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="专题"
@@ -49,7 +49,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Icon size={27} name={'ios-paper-outline'} color={ '#1E90FF'}/>}
 						renderSelectedIcon={()=> <Icon size={27} name={'ios-paper'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'subject'})}>
-						<SubjectPage />
+						<SubjectPage title='专题'/>
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="发现"
@@ -59,7 +59,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Icon size={28} name={'ios-bookmarks-outline'} color={ '#1E90FF'}/>}
 						renderSelectedIcon={()=> <Icon size={28} name={'ios-bookmarks'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'discover'})}>
-						<SecondPage />
+						<SecondPage title='发现'/>
 					</TabNavigator.Item>
 					<TabNavigator.Item
 						title="我的"
