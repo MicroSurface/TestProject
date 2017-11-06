@@ -20,7 +20,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SubjectItemsData from '../Service/SubjectService';
 import SubjectPlazaListView from '../View/SubjectPlazaListView';
 import ChargeSubjectListView from '../View/ChargeSubjectListView';
-import NoNetworkRemindPage from '../Component/NoNetworkRemindPage';
+import NoNetworkRemindPage from './NoNetworkRemindPage';
 
 var arr = [];
 var hasBanner = null;
@@ -65,15 +65,18 @@ export default class SubjectListView extends Component{
 
 	async _fetchData(){
 		var result = await subjectItemsData.getItemsData(this.props.subjectProps);
-		if (result){
-			this.setState({statistics:result, refreshing:false});
+		if (result.status == 200 && result.success){
+			this.setState({statistics:result.responseData, refreshing:false});
 		}else{
 			this.setState({refreshing:false});
 		}
 	}
 
-	_putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
-		var result = subjectItemsData.putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity);
+	async _putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
+		var result = await subjectItemsData.putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity);
+		if (result.status !== 200 && !result.success){
+			console.log(result);
+		}
 	}
 
 	_renderRow(rowData,sectionId, rowId){
@@ -190,24 +193,28 @@ export default class SubjectListView extends Component{
 
 	_renderMainPage(_hasBanner){
 		return(
-			<ScrollView style={styles.scrollViewStyle}
-				refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        tintColor={'#ff0000'}
-                        title={'下拉刷新'}
-                        onRefresh={()=>this._fetchData()} />}
-				showsVerticalScrollIndicator={false}>
-				{ _hasBanner ? <Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/> : null}
-				<ListView 
-					dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
-					renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
-					showsVerticalScrollIndicator={false}
-					enableEmptySections={true}
-					initialListSize={1}
-					pageSize={1}>
-				</ListView>
-			</ScrollView>
+			<View style={styles.scrollViewStyle}>
+				<ScrollView 
+					refreshControl={
+	                    <RefreshControl
+	                        refreshing={this.state.refreshing}
+	                        tintColor={'#ff0000'}
+	                        title={'下拉刷新'}
+	                        onRefresh={()=>this._fetchData()} />}
+					showsVerticalScrollIndicator={false}>
+					{ _hasBanner ? <Image style={styles.subjectBannerStyle} source={{uri:"https://cdn.sspai.com/article/1af40c38-4c79-b17c-4fac-3a1a3dcb31ef.jpg"}}/> : null}
+					<ListView 
+						dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
+						renderRow={(rowData,sectionId, rowId) => this._renderRow(rowData, sectionId,rowId)} 
+						showsVerticalScrollIndicator={false}
+						enableEmptySections={true}
+						initialListSize={1}
+						pageSize={1}>
+					</ListView>
+				</ScrollView>
+			</View>
+			
+			
 		)
 	}
 

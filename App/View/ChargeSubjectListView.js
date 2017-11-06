@@ -14,8 +14,10 @@ import {
 } from 'react-native'
 
 import Dimensions from 'Dimensions';
+import SubjectItemsData from '../Service/SubjectService';
 const mWidth = Dimensions.get('window').width;
 import styles from '../CSS/ChargeSubjectListViewStyle';
+var subjectItemsData = new SubjectItemsData();
 
 export default class ChargeSubjectListView extends Component {
     constructor(props){
@@ -36,23 +38,13 @@ export default class ChargeSubjectListView extends Component {
         this._getChargeSubjectData();
     }
 
-    _getChargeSubjectData(){
-        let url = "https://leancloud.cn/1.1/classes/ChargeSubject";
-        fetch(url, {
-            method:'GET',
-            headers:{
-                'X-LC-Id':'xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz',
-                'X-LC-Key':'YpykRlmTqtTSlLA1t32SywUt',
-                'Content-Type':'application/json',
-            },
-        })
-        .then((response) => response.json())
-        .then((responseData) => {
-            this.setState({statistics:responseData, refreshing:false})
-        })
-        .catch((err) => {
+    async _getChargeSubjectData(){
+        var result = await subjectItemsData.getChargeSubjectData();
+        if (result.status == 200 && result.success){
+            this.setState({statistics:result.responseData, refreshing:false});
+        }else{
             this.setState({refreshing:false});
-        })
+        }
     }
 
     
@@ -104,6 +96,7 @@ export default class ChargeSubjectListView extends Component {
     render(){
         return(
             <ScrollView style={styles.listViewStyle}
+                  showsVerticalScrollIndicator={false}
                   refreshControl={
                         <RefreshControl
                             refreshing={this.state.refreshing}

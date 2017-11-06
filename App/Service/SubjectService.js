@@ -13,12 +13,15 @@ export default class SubjectService {
 		map.method = "GET";
 		map.headers = privateHeaders;
 
-		let response = await fetch(url, map);
-		let responseJson = await response.json();
-		return responseJson;
+		let result = {};
+		result.response = await fetch(url, map);
+		result.responseData = await result.response.json();
+		result.status = result.response.status;
+		result.success = result.response.ok;
+		return result;
 	}
 
-	putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
+	async putFavoriteStatus(_objectId, _isFavorite, _items, _favoriteQuantity){
 		let url = "https://leancloud.cn/1.1/classes/" + _items + "/" + _objectId;
 		let map = {};
 		map.method = "PUT";
@@ -27,7 +30,40 @@ export default class SubjectService {
 		        'isFavorite': _isFavorite,
 		        'favoriteQuantity': _favoriteQuantity ,
 		    })
-		fetch(url, map)
+
+		let result = {};
+		result.response = await fetch(url, map);
+		result.status = result.response.status;
+		result.success = result.response.ok;
+		return result;
 	}
+
+	async getSubjectPlazaData(){
+		let url = "https://leancloud.cn/1.1/classes/SubjectPlaza";
+		let map = {};
+		map.method = "GET";
+		map.headers = privateHeaders;
+
+		let result = {};
+		result.response = await fetch(url, map);
+		result.responseData = await result.response.json();
+		result.status = result.response.status;
+		result.success = result.response.ok;
+		return result;
+	}
+
+	async getChargeSubjectData(){
+        let url = "https://leancloud.cn/1.1/classes/ChargeSubject";
+       	let map = {};
+		map.method = "GET";
+		map.headers = privateHeaders;
+
+		let result = {};
+		result.response = await fetch(url, map);
+		result.responseData = await result.response.json();
+		result.status = result.response.status;
+		result.success = result.response.ok;
+		return result;
+    }
 		
 }

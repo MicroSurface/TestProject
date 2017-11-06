@@ -16,8 +16,7 @@ export default class BubbleBox extends Component {
 	componentDidMount() {
 		this.timer = setTimeout(() => {
 			this.setState({hidden:true});
-			},
-			2000
+			}, 2000
 		);
 	}
 
@@ -34,7 +33,7 @@ export default class BubbleBox extends Component {
 		}else{
 			return (
 				<View style={styles.container}>
-					<Text style={styles.reminder}>{this.props.text}</Text>
+					<Text style={styles.reminder}>{this.props.test}</Text>
 				</View>
 			)
 		}
@@ -43,12 +42,13 @@ export default class BubbleBox extends Component {
 
 const styles = StyleSheet.create({
 	container:{
-		bottom: 80,
-		marginLeft: 50,
-		marginRight: 50,
+		position:'absolute',
+		bottom: 30,
 		borderRadius: 2,
 		backgroundColor: '#222222',
-		height: 30,
+		padding:10,
+		height: 40,
+		alignSelf:'center',
 		justifyContent: 'center',
 	},
 	reminder:{
