@@ -33,7 +33,7 @@ export default class SubjectPage extends Component{
             <View style={{flex:1}}>
                 <TitleNavigator title={this.props.title}/>
                 <View style={styles.containerStyle}>
-                    <ScrollTabBarNavigator/>
+                    <ScrollTabBarNavigator navigator={this.props.navigator}/>
                 </View>
             </View>
         );
