@@ -6,6 +6,8 @@ import {
 	Text,
 	Image,
 	AppRegistry,
+	Platform,
+	StatusBar,
 } from 'react-native';
 
 export default class TitleNavigator extends Component{
@@ -16,9 +18,18 @@ export default class TitleNavigator extends Component{
 
 	render(){
 		return(
-			<View style={styles.container} >
-				<Text style={styles.titleStyle}>{this.props.title}</Text>
+			<View style={styles.container}>
+				<StatusBar
+					hidden={false}
+					translucent={true}
+					backgroundColor={'rgba(255,255,255,0.1)'}
+					barStyle={'light-content'}>
+				</StatusBar>
+				<View>
+					<Text style={styles.titleStyle}>{this.props.title}</Text>
+				</View>
 			</View>
+			
 		)
 	}
 
@@ -27,15 +38,15 @@ export default class TitleNavigator extends Component{
 
 const styles = StyleSheet.create({
 	container:{
-		marginTop:0,
-		height:64,
+		marginTop:(Platform.OS == 'ios') ? 0 : 0,
+		height:(Platform.OS == 'ios') ? 64 : 70,
 		backgroundColor:'#1E90FF',
 		left:0,
 		right:0,
 		justifyContent:'center',
 	},
 	titleStyle:{
-		marginTop:10,
+		marginTop:(Platform.OS == 'ios') ? 15 : 20,
 		fontSize:20,
 		color:'#ffffff',
 		textAlign:'center',
