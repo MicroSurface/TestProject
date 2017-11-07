@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
     StyleSheet,
-    Navigator,
     ListView,
     NetInfo,
     RefreshControl,
@@ -11,7 +10,8 @@ import {
     Button,
     ScrollView,
     View
-} from 'react-native'
+} from 'react-native';
+
 
 import styles from '../CSS/SubjectListViewStyle';
 import Dimensions from 'Dimensions';
@@ -21,6 +21,7 @@ import SubjectItemsData from '../Service/SubjectService';
 import SubjectPlazaListView from '../View/SubjectPlazaListView';
 import ChargeSubjectListView from '../View/ChargeSubjectListView';
 import NoNetworkRemindPage from './NoNetworkRemindPage';
+import CommentPage from '../View/CommentPage';
 
 var arr = [];
 var hasBanner = null;
@@ -103,7 +104,8 @@ export default class SubjectListView extends Component{
 						{this._renderFavorite(rowData, rowId)}
 					</TouchableOpacity>
 					
-					<TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {this._pushToCommentPage()}}>
 						<FontAwesome name={"comment-o"} size={17} color='#666666' />
 					</TouchableOpacity>
 					<Text style={styles.commentQuantityStyle}>{rowData.commentQuantity}</Text>
@@ -111,6 +113,17 @@ export default class SubjectListView extends Component{
 			</View>
 			
 		);
+	}
+
+	_pushToCommentPage(){
+		const{navigator} = this.props;
+		navigator.push({
+			name:'CommentPage',
+			component:CommentPage,
+			params:{
+				title:'评论',
+			}
+		})
 	}
 
 	_renderLine(){

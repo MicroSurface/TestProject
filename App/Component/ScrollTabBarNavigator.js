@@ -26,25 +26,25 @@ export default class ScrollTabBarNavigator extends Component{
 				tabBarPosition='top'
 				initialPage={0}>
 				<View style={{flex:1}} tabLabel="Matrix">
-					<SubjectListView subjectProps="Matrix"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="Matrix"/>
 				</View>
 				<View style={{flex:1}} tabLabel="专题广场">
-					<SubjectListView subjectProps="SubjectPlaza"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="SubjectPlaza"/>
 				</View>
 				<View style={{flex:1}} tabLabel="付费栏目">
-					<SubjectListView subjectProps="ChargeSubject"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="ChargeSubject"/>
 				</View>
 				<View style={{flex:1}} tabLabel="效率工具">
-					<SubjectListView subjectProps="EfficiencyTools"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="EfficiencyTools"/>
 				</View>
 				<View style={{flex:1}} tabLabel="手机摄影">
-					<SubjectListView subjectProps="MobilePhotograph"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="MobilePhotograph"/>
 				</View>
 				<View style={{flex:1}} tabLabel="游戏">
-					<SubjectListView subjectProps="Game"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="Game"/>
 				</View>
 				<View style={{flex:1}} tabLabel="硬件">
-					<SubjectListView subjectProps="Hardware"/>
+					<SubjectListView navigator={this.props.navigator} subjectProps="Hardware"/>
 				</View>
 			</ScrollableTabView>
 		);

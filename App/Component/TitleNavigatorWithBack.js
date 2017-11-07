@@ -1,19 +1,28 @@
 import React, {Component} from 'React';
 import {
 	StyleSheet,
-	Navigator,
 	View,
 	Text,
 	Image,
-	AppRegistry,
+	TouchableOpacity,
 	Platform,
 	StatusBar,
 } from 'react-native';
+
+
+import IconBack from '../Image/Icons/icon_back.png';
 
 export default class TitleNavigator extends Component{
 	constructor(props){
 		super(props);
 
+	}
+
+	_popBack(){
+		const{ navigator } = this.props;
+		if (navigator) {
+			navigator.pop();
+		}
 	}
 
 	render(){
@@ -26,6 +35,11 @@ export default class TitleNavigator extends Component{
 					barStyle={'light-content'}>
 				</StatusBar>
 				<View>
+					<TouchableOpacity
+					 	style={styles.backBtnStyle}
+					 	onPress={() => {this._popBack()}}>
+						<Image style={styles.backImgStyle} source={IconBack}/>
+					</TouchableOpacity>
 					<Text style={styles.titleStyle}>{this.props.title}</Text>
 				</View>
 			</View>
@@ -44,6 +58,19 @@ const styles = StyleSheet.create({
 		left:0,
 		right:0,
 		justifyContent:'center',
+	},
+	backBtnStyle:{
+		position:'absolute',
+		marginTop:(Platform.OS == 'ios') ? 12 : 20,
+		marginLeft:10,
+		height:30,
+		width:30,
+		justifyContent:'center',
+	},
+	backImgStyle:{
+		height:20,
+		width:20,
+		alignSelf:'center',
 	},
 	titleStyle:{
 		marginTop:(Platform.OS == 'ios') ? 15 : 20,
