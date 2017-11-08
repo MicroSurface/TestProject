@@ -53,7 +53,7 @@ export default class TitleNavigator extends Component{
 const styles = StyleSheet.create({
 	container:{
 		marginTop:0,
-		height:(Platform.OS == 'ios') ? 64 : 70,
+		height:(Platform.OS == 'ios') ? 84 : 80,
 		backgroundColor:'#1E90FF',
 		left:0,
 		right:0,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 	},
 	backBtnStyle:{
 		position:'absolute',
-		marginTop:(Platform.OS == 'ios') ? 12 : 20,
+		marginTop:(Platform.OS == 'ios') ? 17 : 20,
 		marginLeft:10,
 		height:30,
 		width:30,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 	},
 	titleStyle:{
-		marginTop:(Platform.OS == 'ios') ? 15 : 20,
+		marginTop:(Platform.OS == 'ios') ? 20 : 20,
 		fontSize:20,
 		color:'#ffffff',
 		textAlign:'center',
