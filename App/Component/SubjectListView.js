@@ -24,6 +24,7 @@ import NoNetworkRemindPage from './NoNetworkRemindPage';
 import CommentPage from '../View/CommentPage';
 
 var arr = [];
+var topicId = null;
 var hasBanner = null;
 var hasConnected = false;
 var subjectItemsData = new SubjectItemsData();
@@ -81,6 +82,7 @@ export default class SubjectListView extends Component{
 	}
 
 	_renderRow(rowData,sectionId, rowId){
+		topicId = rowData.objectId;
 		return(
 			<View style={styles.subjectListStyle}>
 				<View style={styles.headTitleStyle} >
@@ -122,6 +124,7 @@ export default class SubjectListView extends Component{
 			component:CommentPage,
 			params:{
 				title:'评论',
+				topicId:topicId,
 			}
 		})
 	}
