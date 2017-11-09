@@ -2,8 +2,10 @@ import React, {Component} from 'React';
 import {
 	StyleSheet,
 	ListView,
+	ScrollView,
 	TextInput,
 	TouchableOpacity,
+	RefreshControl,
 	View,
 	Text,
 	Image,
@@ -13,6 +15,8 @@ import {
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import NoRecord from '../Image/Icons/icon_no_records.png';
 import Upload from '../Image/Icons/icon_upload.png';
+import CommentService from '../Service/CommentService';
+var commentService = new CommentService();
 
 export default class CommentPage extends Component{
 	constructor(props){
@@ -26,28 +30,50 @@ export default class CommentPage extends Component{
 			dataSource: ds,
 			statistics:{},
 			refreshing:true,
+			content:null,
 		}
 	}
 
 	componentDidMount(){
-		this._getCommentData();
+		this._getCommentData(this.props.topicId);
 	}
 
-	_getCommentData(){
-
+	async _getCommentData(_topicId){
+		var commentResult = await commentService.getCommentInfo(_topicId);
+		if (commentResult.status == 200 && commentResult.success){
+			// this.setState({statistics:commentResult.responseData, refreshing:false});
+		}else{
+			this.setState({refreshing:false});
+		}
 	}
 
-	_postComment(){
-
+	async _postComment(_topicId){
+		if (this.state.content === null || (this.state.content).length == 0){
+			alert("请输入评论");
+			return;
+		}
+		var postResult = await commentService.postCommentInfo(_topicId, this.state.content);
+		if (postResult.status == 200 && postResult.success){
+			console.log('this is result:'+result);
+		}
 	}
 
 	_showListDataOrNot(){
 		if (Object.keys(this.state.statistics).length == 0){
 			return(
-                <View style={styles.containerStyle}>
-                	<Image style={styles.noRecordStyle} source={NoRecord} />
-                	<Text style={styles.noRecordTextStyle}>目前还没有评论，快来评论吧！</Text>
-                </View>
+				<ScrollView
+					style={styles.containerStyle}
+					refreshControl={
+	                    <RefreshControl
+	                        refreshing={this.state.refreshing}
+	                        tintColor={'#ff0000'}
+	                        title={'下拉刷新'}
+	                        onRefresh={()=>this._getCommentData()} />}>
+	                <View style={styles.reminderStyle}>
+	                	<Image style={styles.noRecordStyle} source={NoRecord} />
+	                	<Text style={styles.noRecordTextStyle}>目前还没有评论，快来评论吧！</Text>
+	                </View>
+	            </ScrollView>
 			)
 		}else{
 			return(
@@ -77,10 +103,11 @@ export default class CommentPage extends Component{
 						placeholder={"请输入评论"}
 						placeholderTextColor={'#dfdfdf'}
 						fontSize={16}
-						multiline={true}>
+						multiline={true}
+						onChangeText={(content) => this.setState({content})}>
 					</TextInput>
 					<TouchableOpacity
-						onPress={()=>this._postComment()}>
+						onPress={()=>this._postComment(this.props.topicId)}>
 						<Image style={styles.upLoadStyle} source={Upload} />
 					</TouchableOpacity>
 				</View>
@@ -94,10 +121,14 @@ export default class CommentPage extends Component{
 const styles = StyleSheet.create({
 	containerStyle:{
 		flex:1,
-		marginTop:0, 
-		bottom:0, 
-		justifyContent:'center',
+		marginTop:50, 
+		bottom:50, 
 		backgroundColor:'#f5f5f5',
+	},
+	reminderStyle:{
+		marginTop:0, 
+		height:500, 
+		justifyContent:'center',
 	},
 	noRecordStyle:{
 		height:80,
