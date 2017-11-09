@@ -17,6 +17,7 @@ import NoRecord from '../Image/Icons/icon_no_records.png';
 import Upload from '../Image/Icons/icon_upload.png';
 import CommentService from '../Service/CommentService';
 var commentService = new CommentService();
+var noData = false;
 
 export default class CommentPage extends Component{
 	constructor(props){
@@ -41,7 +42,9 @@ export default class CommentPage extends Component{
 	async _getCommentData(_topicId){
 		var commentResult = await commentService.getCommentInfo(_topicId);
 		if (commentResult.status == 200 && commentResult.success){
-			// this.setState({statistics:commentResult.responseData, refreshing:false});
+			let result = commentResult.responseData.results;
+			noData = result.length == 0 ? true : false;
+			this.setState({statistics:commentResult.responseData, refreshing:false});
 		}else{
 			this.setState({refreshing:false});
 		}
@@ -59,7 +62,25 @@ export default class CommentPage extends Component{
 	}
 
 	_showListDataOrNot(){
-		if (Object.keys(this.state.statistics).length == 0){
+		if (!noData){
+			return(
+				<View style={styles.containerStyle}>
+	                <ListView
+	                	refreshControl={
+		                    <RefreshControl
+		                        refreshing={this.state.refreshing}
+		                        tintColor={'#ff0000'}
+		                        title={'下拉刷新'}
+		                        onRefresh={()=>this._getCommentData(this.props.topicId)} />}
+	                	dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
+	                	renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, sectionId, rowId)}
+	                	showsVeriticalScrollIndicator={true}
+	                	enableEmptySections={true}
+	                	initialListSize={1}>
+	                </ListView>
+	            </View>
+			)
+		}else{
 			return(
 				<ScrollView
 					style={styles.containerStyle}
@@ -68,28 +89,22 @@ export default class CommentPage extends Component{
 	                        refreshing={this.state.refreshing}
 	                        tintColor={'#ff0000'}
 	                        title={'下拉刷新'}
-	                        onRefresh={()=>this._getCommentData()} />}>
+	                        onRefresh={()=>this._getCommentData(this.props.topicId)} />}>
 	                <View style={styles.reminderStyle}>
 	                	<Image style={styles.noRecordStyle} source={NoRecord} />
 	                	<Text style={styles.noRecordTextStyle}>目前还没有评论，快来评论吧！</Text>
 	                </View>
 	            </ScrollView>
 			)
-		}else{
-			return(
-                <ListView 
-                	dataSource={this.state.dataSource.cloneWithRowsAndSections(this.state.statistics)}
-                	renderRow={(rowData, sectionId, rowId) => this._renderRow(rowData, sectionId, rowId)}
-                	showsVeriticalScrollIndicator={true}
-                	enableEmptySections={true}
-                	initialListSize={1}>
-                </ListView>
-			);
 		}
 	}
 
-	_renderRow(){
-
+	_renderRow(rowData, sectionId, rowId){
+		return(
+			<View style={styles.listViewStyle}>
+				<Text style={styles.commentContentStyle}>{rowData.commentContent}</Text>
+			</View>
+		)
 	}
 
 	render(){
@@ -162,6 +177,19 @@ const styles = StyleSheet.create({
 		marginTop:10,
 		height:25,
 		width:25,
+	},
+	listViewStyle:{
+		marginTop:0,
+		left:0,
+		right:0,
+		height:50,
+		backgroundColor:'#dfdfdf',
+		justifyContent:'center',
+	},
+	commentContentStyle:{
+		fontSize:20,
+		color:'#222222',
+		textAlign:'left',
 	}
 
 })
