@@ -104,7 +104,7 @@ export default class CommentPage extends Component{
 
 	_renderRow(rowData, sectionId, rowId){
 		return(
-			<View>
+			<TouchableOpacity>
 				<View style={styles.listViewStyle}>
 					<Image style={styles.headImageStyle} source={rowData.headImageUrl ? {uri:rowData.headImageUrl} : DefautHeader} />
 					<View style={styles.userInfoStyle}>
@@ -114,7 +114,7 @@ export default class CommentPage extends Component{
 					</View>
 				</View>
 				<View style={styles.separateLineStyle} />
-			</View>
+			</TouchableOpacity>
 		)
 	}
 
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 	},
 	headImageStyle:{
-		marginTop:30,
+		marginTop:20,
 		marginLeft:20,
 		height:30,
 		width:30,
