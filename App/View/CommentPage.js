@@ -15,6 +15,7 @@ import {
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import NoRecord from '../Image/Icons/icon_no_records.png';
 import Upload from '../Image/Icons/icon_upload.png';
+import DefautHeader from '../Image/Icons/icon_default_header.png';
 import CommentService from '../Service/CommentService';
 var commentService = new CommentService();
 var noData = false;
@@ -56,8 +57,10 @@ export default class CommentPage extends Component{
 			return;
 		}
 		var postResult = await commentService.postCommentInfo(_topicId, this.state.content);
-		if (postResult.status == 200 && postResult.success){
-			console.log('this is result:'+result);
+		console.log("this is status: "+postResult.status);
+		if (postResult.status == 201 && postResult.success){
+			this._getCommentData(this.props.topicId);
+			// console.log('this is result:'+result);
 		}
 	}
 
@@ -101,8 +104,16 @@ export default class CommentPage extends Component{
 
 	_renderRow(rowData, sectionId, rowId){
 		return(
-			<View style={styles.listViewStyle}>
-				<Text style={styles.commentContentStyle}>{rowData.commentContent}</Text>
+			<View>
+				<View style={styles.listViewStyle}>
+					<Image style={styles.headImageStyle} source={rowData.headImageUrl ? {uri:rowData.headImageUrl} : DefautHeader} />
+					<View style={styles.userInfoStyle}>
+						<Text style={styles.nickNameStyle}>{rowData.userNickName}</Text>
+						<Text style={styles.commentContentStyle}>{rowData.commentContent}</Text>
+						<Text style={styles.dateStyle}>{rowData.createdAt}</Text>
+					</View>
+				</View>
+				<View style={styles.separateLineStyle} />
 			</View>
 		)
 	}
@@ -165,6 +176,10 @@ const styles = StyleSheet.create({
 		right:0,
 		backgroundColor:'#ffffff',
 		flexDirection:'row',
+		shadowColor:'#dfdfdf',
+	    shadowOffset:{h:-3,w:0},
+	    shadowRadius:3,
+	    shadowOpacity:0.8,
 	},
 	commentTextInputStyle:{
 		marginTop:0,
@@ -182,14 +197,50 @@ const styles = StyleSheet.create({
 		marginTop:0,
 		left:0,
 		right:0,
-		height:50,
-		backgroundColor:'#dfdfdf',
-		justifyContent:'center',
+		height:100,
+		backgroundColor:'#ffffff',
+		flexDirection:'row',
+	},
+	headImageStyle:{
+		marginTop:30,
+		marginLeft:20,
+		height:30,
+		width:30,
+		borderRadius:15,
+	},
+	userInfoStyle:{
+		flexDirection:'column',
+		marginLeft:0, 
+		width:280, 
+		height:100,
+	},
+	nickNameStyle:{
+		marginTop:15,
+		marginLeft:20,
+		fontSize:18,
+		color:'#1E90FF',
+		textAlign:'left',
 	},
 	commentContentStyle:{
-		fontSize:20,
+		marginTop:5,
+		marginLeft:20,
+		fontSize:15,
 		color:'#222222',
 		textAlign:'left',
-	}
+	},
+	dateStyle:{
+		marginTop:15,
+		marginLeft:20,
+		fontSize:10,
+		color:'#666666',
+		textAlign:'left',
+	},
+	separateLineStyle:{
+		backgroundColor:'#dfdfdf',
+		height:1, 
+		marginTop:0,
+		marginLeft:10, 
+		marginRight:10,
+	},
 
 })
