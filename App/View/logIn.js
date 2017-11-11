@@ -26,6 +26,7 @@ var Item = AV.Object.extend('Item');
 import HomePage from './HomePage'
 import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
+import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 
 var AccountList = [
   {account: '1', password: '1'},
@@ -55,21 +56,21 @@ export default class LogIn extends Component {
     }
   }
 
-  goNextPage(){
+  _loginAction(){
     if (this.state.textACT != null && this.state.textPWD != null){
       const {navigator} = this.props;
       if (navigator && this.verifyAccount() == true) {
-        var item = new Item();
-        item.set('account', this.state.textACT);
-        item.set('password', this.state.textPWD);
-        item.save().then(function(){
+        // var item = new Item();
+        // item.set('account', this.state.textACT);
+        // item.set('password', this.state.textPWD);
+        // item.save().then(function(){
           navigator.push({
             name: 'TabNavigator',
             component: TabNavigator,
           });
-        }).catch(function(e){
-          AlertIOS.alert("Save Fail", e.message);
-        })
+        // }).catch(function(e){
+        //   AlertIOS.alert("Save Fail", e.message);
+        // })
       }else{
         this.setState({hidden: false, isEmpty: false ,isCorrect: false});
         this.timeHandler();
@@ -78,6 +79,10 @@ export default class LogIn extends Component {
       this.setState({hidden: false, isEmpty: true, isCorrect: true});
       this.timeHandler();
     }
+  }
+
+  _registerAction(){
+
   }
 
   hiddenBubbleBox() {
@@ -105,18 +110,20 @@ export default class LogIn extends Component {
     this.logInTimer && clearTimeout(this.logInTimer);
   }
 
+  _onTextChange(event){
+    this.setState({content:event.nativeEvent.text});
+  }
+
 
   render() {
     return(
       <View style={{backgroundColor: '#f4f4f4', flex: 1}}>
+        <TitleNavigatorWithBack navigator={this.props.navigator} title={this.props.title}/>
         <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
-            <Image 
-              style={styles.imageIcon}
-              source ={require("../Image/iconImage.png")}  />
-
+            <Text style={styles.titleStyle}>密码登录</Text>
             <TextInput
               style={styles.userInput}
-              placeholder='Your Account'
+              placeholder='输入手机号或邮箱'
               onChangeText = {(textACT) => this.setState({textACT})}
               autoFocus={true}
               autoCapitalize='none'
@@ -125,7 +132,7 @@ export default class LogIn extends Component {
 
             <TextInput
               style={styles.pswInput}
-              placeholder='Your Password'
+              placeholder='输入密码'
               onChangeText = {(textPWD) => this.setState({textPWD})}
               autoFocus={false}
               secureTextEntry={true}
@@ -134,9 +141,14 @@ export default class LogIn extends Component {
               textAlign='center' />
 
             <TouchableOpacity
-              style={styles.login}
-              onPress={()=>this.goNextPage()} >
-              <Text style={{color: '#ff0000', fontSize: 20, textAlign: 'center'}}>Login</Text>
+              style={styles.loginStyle}
+              onPress={()=>this._loginAction()} >
+              <Text style={styles.loginTextStyle}>登录</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.registerStyle}
+              onPress={()=>this._registerAction()} >
+              <Text style={styles.registerTextStyle}>新用户注册</Text>
             </TouchableOpacity>
         </View>
         {this.hiddenBubbleBox()}
@@ -148,10 +160,10 @@ export default class LogIn extends Component {
 
 
 const styles = StyleSheet.create({
-  imageIcon:{
+  titleStyle:{
     marginTop: 50,
-    width: 63,
-    height: 56,
+    fontSize:20,
+    color:'#222222',
     alignSelf: 'center',
   },
   userInput:{
@@ -164,11 +176,20 @@ const styles = StyleSheet.create({
     marginTop: 2,
     height: 50,
   },
-  login:{
+  loginStyle:{
     marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    height: 90,
+    marginLeft: 30,
+    marginRight: 30,
+    height: 50,
+    borderRadius:5,
+    backgroundColor:'#1E90FF',
+    justifyContent:'center',
   },
+  loginTextStyle:{
+    color: '#ffffff', 
+    fontSize: 20, 
+    textAlign: 'center',
+    alignSelf:'center',
+  }
 
 });

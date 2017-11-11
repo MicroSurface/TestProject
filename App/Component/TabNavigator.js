@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import SecondPage from '../View/SecondPage';
 import HomePage from '../View/HomePage';
 import SubjectPage from '../View/SubjectPage';
+import MyInfoPage from '../View/MyInfoPage';
 
 const mWidth = Dimensions.get('window').width;
 const mHeight = Dimensions.get('window').height;
@@ -69,9 +70,7 @@ export default class TabNavigators extends Component{
 						renderIcon={()=> <Icon size={29} name={'ios-person-outline'} color={ '#1E90FF'}/>}
 						renderSelectedIcon={()=> <Icon size={29} name={'ios-person'} color={ '#1E90FF'}/>}
 						onPress={()=>this.setState({ selectedTab:'myInfo'})}>
-						<View style={{flex:1, justifyContent:'center'}}>
-							<Text style={{alignSelf:'center', fontSize:20}}>我的</Text>
-						</View>
+						<MyInfoPage navigator={this.props.navigator} title='我的' />
 					</TabNavigator.Item>
 				</TabNavigator>
 			</View>
