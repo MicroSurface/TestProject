@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 
 
-import IconBack from '../Image/Icons/icon_back.png';
+import IconClose from '../Image/Icons/icon_close.png';
 
-export default class TitleNavigatorWithBack extends Component{
+export default class TitleNavigatorWithClose extends Component{
 	constructor(props){
 		super(props);
 
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
 	},
 })
 
-module.exports = TitleNavigatorWithBack;
+module.exports = TitleNavigatorWithClose;
