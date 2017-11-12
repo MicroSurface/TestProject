@@ -28,6 +28,7 @@ import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import NewUserRegisterPage from '../View/NewUserRegisterPage';
+import Password from '../Image/Icons/icon_password.png';
 
 var AccountList = [
   {account: '1', password: '1'},
@@ -132,12 +133,14 @@ export default class LogIn extends Component {
       <View style={{backgroundColor: '#f4f4f4', flex: 1}}>
         <TitleNavigatorWithBack navigator={this.props.navigator} title={this.props.title}/>
         <View style={{backgroundColor: '#f4f4f4', flex: 1}} >
-            <Text style={styles.titleStyle}>密码登录</Text>
+            <View style={{flexDirection:'row',justifyContent:'center', marginTop:0, height:80,left:0,right:0}}>
+                <Image style={styles.passwordImageStyle} source={Password} />
+                <Text style={styles.titleStyle}>密码登录</Text>
+            </View>
             <TextInput
               style={styles.userInput}
-              placeholder='输入手机号或邮箱'
+              placeholder='输入手机号或用户名'
               onChangeText = {(textACT) => this.setState({textACT})}
-              autoFocus={true}
               autoCapitalize='none'
               underlineColorAndroid={'transparent'}
               textAlign='center' />
@@ -146,7 +149,6 @@ export default class LogIn extends Component {
               style={styles.pswInput}
               placeholder='输入密码'
               onChangeText = {(textPWD) => this.setState({textPWD})}
-              autoFocus={false}
               secureTextEntry={true}
               keyboardType='numeric'
               underlineColorAndroid={'transparent'}
@@ -172,7 +174,14 @@ export default class LogIn extends Component {
 
 
 const styles = StyleSheet.create({
+  passwordImageStyle:{
+    marginTop:50,
+    height:19,
+    width:26,
+    alignSelf:'center',
+  },
   titleStyle:{
+    marginLeft:10,
     marginTop: 50,
     fontSize:20,
     color:'#222222',
