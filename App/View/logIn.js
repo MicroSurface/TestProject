@@ -27,6 +27,7 @@ import HomePage from './HomePage'
 import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
+import NewUserRegisterPage from '../View/NewUserRegisterPage';
 
 var AccountList = [
   {account: '1', password: '1'},
@@ -81,8 +82,19 @@ export default class LogIn extends Component {
     }
   }
 
-  _registerAction(){
-
+  _registerAction(_type){
+    const {navigator} = this.props;
+    if (navigator){
+      navigator.push({
+        name:'NewUserRegisterPage',
+        type:_type,
+        component: NewUserRegisterPage,
+        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        params:{
+          title:'新用户注册',
+        }
+      })
+    }
   }
 
   hiddenBubbleBox() {
@@ -147,7 +159,7 @@ export default class LogIn extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.registerStyle}
-              onPress={()=>this._registerAction()} >
+              onPress={()=>this._registerAction('register')} >
               <Text style={styles.registerTextStyle}>新用户注册</Text>
             </TouchableOpacity>
         </View>
@@ -178,18 +190,33 @@ const styles = StyleSheet.create({
   },
   loginStyle:{
     marginTop: 20,
-    marginLeft: 30,
-    marginRight: 30,
-    height: 50,
+    marginLeft: 50,
+    marginRight: 50,
+    height: 40,
     borderRadius:5,
     backgroundColor:'#1E90FF',
     justifyContent:'center',
   },
   loginTextStyle:{
     color: '#ffffff', 
-    fontSize: 20, 
+    fontSize: 18, 
     textAlign: 'center',
     alignSelf:'center',
-  }
+  },
+  registerStyle:{
+    marginTop: 20,
+    marginLeft: 50,
+    marginRight: 50,
+    height: 40,
+    borderRadius:5,
+    backgroundColor:'#00BFFF',
+    justifyContent:'center',
+  },
+  registerTextStyle:{
+    color: '#ffffff', 
+    fontSize: 18, 
+    textAlign: 'center',
+    alignSelf:'center',
+  },
 
 });

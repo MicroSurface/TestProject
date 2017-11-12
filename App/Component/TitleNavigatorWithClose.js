@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
 		justifyContent:'center',
 	},
 	backImgStyle:{
-		height:20,
-		width:20,
+		height:15,
+		width:15,
 		alignSelf:'center',
 	},
 	titleStyle:{
