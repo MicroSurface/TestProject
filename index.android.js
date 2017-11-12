@@ -21,31 +21,33 @@ import {
 import AV from 'leancloud-storage';
 AV.initialize("xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz","YpykRlmTqtTSlLA1t32SywUt");
 
-
-import logIn from './App/View/logIn';
-
+import LogIn from './App/View/LogIn';
+import TabNavigator from './App/Component/TabNavigator';
 
 export default class TestProject extends Component {
 
   render() {
-    var defaultName='logIn';
-    var defaultComponent = logIn;
+    var defaultName='TabNavigator';
+    var defaultComponent = TabNavigator;
     return(
       <Navigator
       /* 初始化路由 */
       initialRoute={{name: defaultName, component: defaultComponent}}
-
       /* 配置跳转动画 */
+
       configureScene={(route) => {
-        return Navigator.SceneConfigs.HorizontalSwipeJump;
+        if (route.type === 'register' ){
+          return Navigator.SceneConfigs.FloatFromBottom;
+        }
+        return Navigator.SceneConfigs.PushFromRight;
       }}
 
       /*渲染场景*/
       renderScene={(route, navigator) => {
         let Component = route.component;
-        return <Component navigator={navigator} />
-      }}/>
-    );
+        return <Component {...route.params} navigator={navigator} />
+      }} />
+    )
   }
 }
 
