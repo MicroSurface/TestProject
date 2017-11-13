@@ -28,6 +28,7 @@ import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import NewUserRegisterPage from '../View/NewUserRegisterPage';
+import RegisterService from '../Service/RegisterService';
 import ModalLayer from '../Component/ModalLayer';
 import Password from '../Image/Icons/icon_password.png';
 
@@ -36,6 +37,7 @@ var AccountList = [
   {account: 'zx2017rt@outlook.com', password: '2018'}
 ];
   
+var registerService = new RegisterService();
 
 export default class LogIn extends Component {
   constructor(props){
@@ -47,6 +49,10 @@ export default class LogIn extends Component {
         textACT: '',
         textPWD:'',
         isModalShow:false,
+        isReminder:false,
+        reminderContent:'',
+        hasError:false,
+        isLogging:false,
       };
   }
 
@@ -60,30 +66,34 @@ export default class LogIn extends Component {
     }
   }
 
-  _loginAction(){
-    if (this.state.textACT != null && this.state.textPWD != null){
-      const {navigator} = this.props;
-      if (navigator && this.verifyAccount() == true) {
-        // var item = new Item();
-        // item.set('account', this.state.textACT);
-        // item.set('password', this.state.textPWD);
-        // item.save().then(function(){
+  async _loginAction(){
+    if (this.state.textACT !== '' && this.state.textPWD !== ''){
+      this.setState({isModalShow:true, isLogging:true});
+      var postResult = await registerService.postLogin(this.state.textACT, this.state.textPWD);
+      if (postResult.status == 201 && postResult.success){
+        this.setState({isModalShow:false});
+        const {navigator} = this.props;
+        if (navigator){
           navigator.pop();
-          //   name: 'TabNavigator',
-          //   component: TabNavigator,
-          // });
-        // }).catch(function(e){
-        //   AlertIOS.alert("Save Fail", e.message);
-        // })
-      }else{
-        this.setState({isModalShow:true});
+        }
+      }else if(postResult.status == 400){
+        this.setState({isModalShow:true, hasError:postResult.responseData.code});
         this.timeHandler();
       }
     }else{
-      this.setState({isModalShow:true});
+      this.setState({isModalShow:true, isReminder:true, reminderContent:'请输入用户名和密码'});
       this.timeHandler();
     }
   }
+
+  //--LeanCloud Set Item;
+  // var item = new Item();
+  // item.set('account', this.state.textACT);
+  // item.set('password', this.state.textPWD);
+  // item.save().then(function(){
+  // }).catch(function(e){
+  //   AlertIOS.alert("Save Fail", e.message);
+  // })
 
   _registerAction(_type){
     const {navigator} = this.props;
@@ -167,7 +177,12 @@ export default class LogIn extends Component {
               <Text style={styles.registerTextStyle}>新用户注册</Text>
             </TouchableOpacity>
         </View>
-        <ModalLayer isVisible={this.state.isModalShow} isReminder={true} reminderContent='请输入用户名'/>
+        <ModalLayer 
+          isVisible={this.state.isModalShow} 
+          isReminder={this.state.isReminder} 
+          reminderContent={this.state.reminderContent}
+          hasError={this.state.hasError}
+          isLogging={this.state.isLogging}/>
       </View>
     );
   }
