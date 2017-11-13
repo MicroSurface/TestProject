@@ -28,6 +28,7 @@ import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import NewUserRegisterPage from '../View/NewUserRegisterPage';
+import ModalLayer from '../Component/ModalLayer';
 import Password from '../Image/Icons/icon_password.png';
 
 var AccountList = [
@@ -40,11 +41,12 @@ export default class LogIn extends Component {
   constructor(props){
       super(props);
       this.state = {
-        hidden: true,
-        isEmpty: true,
-        isCorrect: false,
+        // hidden: true,
+        // isEmpty: true,
+        // isCorrect: false,
         textACT: '',
-        textPWD:''
+        textPWD:'',
+        isModalShow:false,
       };
   }
 
@@ -66,19 +68,19 @@ export default class LogIn extends Component {
         // item.set('account', this.state.textACT);
         // item.set('password', this.state.textPWD);
         // item.save().then(function(){
-          navigator.push({
-            name: 'TabNavigator',
-            component: TabNavigator,
-          });
+          navigator.pop();
+          //   name: 'TabNavigator',
+          //   component: TabNavigator,
+          // });
         // }).catch(function(e){
         //   AlertIOS.alert("Save Fail", e.message);
         // })
       }else{
-        this.setState({hidden: false, isEmpty: false ,isCorrect: false});
+        this.setState({isModalShow:true});
         this.timeHandler();
       }
     }else{
-      this.setState({hidden: false, isEmpty: true, isCorrect: true});
+      this.setState({isModalShow:true});
       this.timeHandler();
     }
   }
@@ -112,15 +114,15 @@ export default class LogIn extends Component {
   }
 
   timeHandler() {
-    this.logInTimer = setTimeout(() => {
+    this.reminderTimer = setTimeout(() => {
       //卸载BubbleBox组件
-      this.setState({hidden: true});
+      this.setState({isModalShow:false});
     }, 2000);
   }
 
   componentWillUnmount() {
     //清除计时器
-    this.logInTimer && clearTimeout(this.logInTimer);
+    this.reminderTimer && clearTimeout(this.reminderTimer);
   }
 
   _onTextChange(event){
@@ -165,7 +167,7 @@ export default class LogIn extends Component {
               <Text style={styles.registerTextStyle}>新用户注册</Text>
             </TouchableOpacity>
         </View>
-        {this.hiddenBubbleBox()}
+        <ModalLayer isVisible={this.state.isModalShow} isReminder={true} reminderContent='请输入用户名'/>
       </View>
     );
   }
