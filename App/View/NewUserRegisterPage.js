@@ -25,6 +25,7 @@ export default class NewUserRegisterPage extends Component {
       password:'',
       isShow:false,
       isCompleteRegister:false,
+      hasError:false,
     }
 
   }
@@ -40,18 +41,25 @@ export default class NewUserRegisterPage extends Component {
        navigator.pop();
         }, 2000
       );
+    }else if (postResult.status == 400){
+      this.setState({hasError:postResult.responseData.code});
+      this.hiddenTimer = setTimeout(() => {
+        this.setState({isShow:false});
+        }, 2000
+      );
     }
   }
 
   componentWillUnmount() {
     //卸载该页面时清除计时器
     this.timer && clearTimeout(this.timer);
+    this.hiddenTimer && clearTimeout(this.hiddenTimer);
   }
 
   render(){
     return(
       <View style={{flex:1, backgroundColor:'#f5f5f5'}}>
-        <ModalLayer isVisible={this.state.isShow} isComplete={this.state.isCompleteRegister}/>
+        <ModalLayer isVisible={this.state.isShow} isComplete={this.state.isCompleteRegister} hasError={this.state.hasError}/>
         <TitleNavigatorWithClose navigator={this.props.navigator} title='新用户注册' />
         <Text style={styles.titleStyle}>手机号快速注册</Text>
         <TextInput 

@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 import CompleteIcon from '../Image/Icons/icon_complete.png';
+import WrongIcon from '../Image/Icons/icon_wrong.png';
+import ReminderIcon from '../Image/Icons/icon_reminder.png';
 
 export default class ModalLayer extends Component {
 	constructor(props){
@@ -24,17 +26,43 @@ export default class ModalLayer extends Component {
 			return(
 				<Image style={styles.completeStyle} source={CompleteIcon} />
 			)
+		}else if(this.props.isReminder){
+			return(
+				<Image style={styles.completeStyle} source={ReminderIcon} />
+			)
+		}else if(this.props.hasError){
+			return(
+				<Image style={styles.completeStyle} source={WrongIcon} />
+			)
 		}else{
 			return(
 				<ActivityIndicator color={'#ffffff'} style={styles.indicatorStyle} />
 			)
 		}
 	}
+		
 
 	_showStatus(){
 		if(this.props.isComplete){
 			let params = '注册完成';
 			return params;
+		}else if(this.props.isReminder){
+			let params = this.props.reminderContent;
+			return params;
+		}else if (this.props.hasError){
+			if (this.props.hasError == 214){
+				let params = '该手机号已注册';
+				return params;
+			}else if (this.props.hasError == 127 ){
+				let params = '无效的手机号码';
+				return params;
+			}else if (this.props.hasError == 218 ){
+				let params = '请填写密码';
+				return params;
+			}else if (this.props.hasError == 202 ){
+				let params = '该用户名已注册';
+				return params;
+			}
 		}else{
 			let params = '注册中...';
 			return params;
@@ -87,8 +115,8 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 	},
 	completeStyle:{
-		height:30,
-		width:30,
+		height:25,
+		width:25,
 		alignSelf:'center',
 	}
 })

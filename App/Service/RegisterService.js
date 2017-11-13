@@ -21,6 +21,7 @@ export default class RegisterService {
 		result.response = await fetch(url, map);
 		result.status = result.response.status;
 		result.success = result.response.ok;
+		result.responseData = await result.response.json();
 		return result;
 	}
 }
