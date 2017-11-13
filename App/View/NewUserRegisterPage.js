@@ -11,6 +11,7 @@ import {
 import TitleNavigatorWithClose from '../Component/TitleNavigatorWithClose';
 import RegisterService from '../Service/RegisterService';
 import MyInfoPage from '../View/MyInfoPage';
+import ModalLayer from '../Component/ModalLayer';
 
 var regiserService = new RegisterService();
 
@@ -22,31 +23,35 @@ export default class NewUserRegisterPage extends Component {
       userName:'',
       phoneNumber:'',
       password:'',
+      isShow:false,
+      isCompleteRegister:false,
     }
 
   }
 
   async _postNewUser(_userName,_mobilePhone, _password){
+    this.setState({isShow:true});
     var postResult = await regiserService.postNewUser(_userName, _mobilePhone, _password);
     if (postResult.status == 201 && postResult.success){
-      console.log('this is result:'+postResult);
+      this.setState({isCompleteRegister:true});
       const {navigator} = this.props;
-      if (navigator){
-        navigator.popToRoute({component:MyInfoPage});
-      }
+      //延时2秒返回前一页
+      this.timer = setTimeout(() => {
+       navigator.pop();
+        }, 2000
+      );
     }
   }
 
-  _popToRoute(){
-    const {navigator} = this.props;
-    if (navigator){
-      navigator.popToRoute({component:MyInfoPage});
-    }
+  componentWillUnmount() {
+    //卸载该页面时清除计时器
+    this.timer && clearTimeout(this.timer);
   }
 
   render(){
     return(
       <View style={{flex:1, backgroundColor:'#f5f5f5'}}>
+        <ModalLayer isVisible={this.state.isShow} isComplete={this.state.isCompleteRegister}/>
         <TitleNavigatorWithClose navigator={this.props.navigator} title='新用户注册' />
         <Text style={styles.titleStyle}>手机号快速注册</Text>
         <TextInput 
