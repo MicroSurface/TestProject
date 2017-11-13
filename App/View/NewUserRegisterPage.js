@@ -26,12 +26,13 @@ export default class NewUserRegisterPage extends Component {
       isShow:false,
       isCompleteRegister:false,
       hasError:false,
+      isRegistering:false,
     }
 
   }
 
   async _postNewUser(_userName,_mobilePhone, _password){
-    this.setState({isShow:true});
+    this.setState({isShow:true, isRegistering:true});
     var postResult = await regiserService.postNewUser(_userName, _mobilePhone, _password);
     if (postResult.status == 201 && postResult.success){
       this.setState({isCompleteRegister:true});
@@ -59,7 +60,11 @@ export default class NewUserRegisterPage extends Component {
   render(){
     return(
       <View style={{flex:1, backgroundColor:'#f5f5f5'}}>
-        <ModalLayer isVisible={this.state.isShow} isComplete={this.state.isCompleteRegister} hasError={this.state.hasError}/>
+        <ModalLayer 
+          isVisible={this.state.isShow} 
+          isRegistering={this.state.isRegistering} 
+          isComplete={this.state.isCompleteRegister} 
+          hasError={this.state.hasError}/>
         <TitleNavigatorWithClose navigator={this.props.navigator} title='新用户注册' />
         <Text style={styles.titleStyle}>手机号快速注册</Text>
         <TextInput 

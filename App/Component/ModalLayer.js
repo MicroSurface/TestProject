@@ -34,7 +34,7 @@ export default class ModalLayer extends Component {
 			return(
 				<Image style={styles.completeStyle} source={WrongIcon} />
 			)
-		}else{
+		}else if(this.props.isRegistering || this.props.isLogging){
 			return(
 				<ActivityIndicator color={'#ffffff'} style={styles.indicatorStyle} />
 			)
@@ -63,8 +63,11 @@ export default class ModalLayer extends Component {
 				let params = '该用户名已注册';
 				return params;
 			}
-		}else{
+		}else if(this.props.isRegistering){
 			let params = '注册中...';
+			return params;
+		}else if(this.props.isLogging){
+			let params = '登录中...';
 			return params;
 		}
 	}
@@ -93,13 +96,12 @@ export default class ModalLayer extends Component {
 const styles = StyleSheet.create({
 	modalStyle:{
 		flex:1,
+		padding:10,
 		position:'absolute',
 		bottom:100,
-		height:50,
-		left:100,
-		right:100,
 		borderRadius:5,
 		backgroundColor:'rgba(0,0,0,0.5)',
+		alignSelf:'center',
 		justifyContent:'center',
 		flexDirection:'row'
 	},
@@ -115,8 +117,8 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 	},
 	completeStyle:{
-		height:25,
-		width:25,
+		height:20,
+		width:20,
 		alignSelf:'center',
 	}
 })
