@@ -77,12 +77,13 @@ export default class LogIn extends Component {
       var postResult = await registerService.postLogin(this.state.textACT, this.state.textPWD);
       if (postResult.status == 200 && postResult.success){
         this.setState({isModalShow:false });
+        //登录成功，保存用户信息
+        this._saveUserInfo(postResult);
         const {navigator} = this.props;
         if (navigator){
           navigator.pop();
         }
       }else if(postResult.status == 400){
-        console.log('this is log:'+postResult.responseData.code);
         this.setState({
           isModalShow:true, 
           hasError:postResult.responseData.code,
@@ -99,6 +100,24 @@ export default class LogIn extends Component {
       });
       this.timeHandler();
     }
+  }
+
+  _saveUserInfo(_postResult){
+   storage.save({
+      key:'loginState',
+      data:{
+        userId:_postResult.responseData.objectId,
+        userName:_postResult.responseData.username,
+        sessionToken:_postResult.responseData.sessionToken,
+      },
+      expires:null,
+    });
+    global.user.loginState = true;
+    global.user.userData = {
+        userId:_postResult.responseData.objectId,
+        userName:_postResult.responseData.username,
+        sessionToken:_postResult.responseData.sessionToken,
+    };
   }
 
   //--LeanCloud Set Item;

@@ -32,5 +32,11 @@ This Repository provides the test codes and awesome functions
 
 	15. Add Title Navigator
 
+	16. Add Comment function
+
+	17. Login funciton actulized
+
+	18. Sustainable storage actulized(save the login information)
+
 
 

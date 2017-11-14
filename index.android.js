@@ -21,6 +21,9 @@ import {
 import AV from 'leancloud-storage';
 AV.initialize("xzF4HavabiRfEU2eKvLnvpU9-gzGzoHsz","YpykRlmTqtTSlLA1t32SywUt");
 
+import './App/Statistics/GlobalConfig';
+import './App/Statistics/GlobalStorage';
+
 import LogIn from './App/View/LogIn';
 import TabNavigator from './App/Component/TabNavigator';
 
