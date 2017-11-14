@@ -62,6 +62,12 @@ export default class ModalLayer extends Component {
 			}else if (this.props.hasError == 202 ){
 				let params = '该用户名已注册';
 				return params;
+			}else if(this.props.hasError == 211){
+				let params = '该用户未注册';
+				return params;
+			}else if (this.props.hasError == 210){
+				let params = '密码错误';
+				return params;
 			}
 		}else if(this.props.isRegistering){
 			let params = '注册中...';

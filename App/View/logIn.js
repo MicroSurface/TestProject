@@ -68,20 +68,35 @@ export default class LogIn extends Component {
 
   async _loginAction(){
     if (this.state.textACT !== '' && this.state.textPWD !== ''){
-      this.setState({isModalShow:true, isLogging:true});
+      this.setState({
+        isModalShow:true, 
+        isLogging:true, 
+        isReminder:false, 
+        hasError:false,
+      });
       var postResult = await registerService.postLogin(this.state.textACT, this.state.textPWD);
-      if (postResult.status == 201 && postResult.success){
-        this.setState({isModalShow:false});
+      if (postResult.status == 200 && postResult.success){
+        this.setState({isModalShow:false });
         const {navigator} = this.props;
         if (navigator){
           navigator.pop();
         }
       }else if(postResult.status == 400){
-        this.setState({isModalShow:true, hasError:postResult.responseData.code});
+        console.log('this is log:'+postResult.responseData.code);
+        this.setState({
+          isModalShow:true, 
+          hasError:postResult.responseData.code,
+        });
         this.timeHandler();
       }
     }else{
-      this.setState({isModalShow:true, isReminder:true, reminderContent:'请输入用户名和密码'});
+      let params = '请输入用户名和密码';
+      this.setState({
+        isModalShow:true, 
+        isLogging:false, 
+        isReminder:true, 
+        reminderContent:params,
+      });
       this.timeHandler();
     }
   }
@@ -162,7 +177,6 @@ export default class LogIn extends Component {
               placeholder='输入密码'
               onChangeText = {(textPWD) => this.setState({textPWD})}
               secureTextEntry={true}
-              keyboardType='numeric'
               underlineColorAndroid={'transparent'}
               textAlign='center' />
 

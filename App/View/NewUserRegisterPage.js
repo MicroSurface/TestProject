@@ -32,10 +32,19 @@ export default class NewUserRegisterPage extends Component {
   }
 
   async _postNewUser(_userName,_mobilePhone, _password){
-    this.setState({isShow:true, isRegistering:true});
+    this.setState({
+      isShow:true, 
+      isRegistering:true, 
+      isCompleteRegister:false, 
+      hasError:false,
+    });
     var postResult = await regiserService.postNewUser(_userName, _mobilePhone, _password);
     if (postResult.status == 201 && postResult.success){
-      this.setState({isCompleteRegister:true});
+      this.setState({
+        isCompleteRegister:true, 
+        isRegistering:false, 
+        hasError:false,
+      });
       const {navigator} = this.props;
       //延时2秒返回前一页
       this.timer = setTimeout(() => {

@@ -25,14 +25,13 @@ export default class RegisterService {
 		return result;
 	}
 
-	async postLogin(_userName, _phoneNumber, _password){
+	async postLogin(_userName, _password){
 		let url = "https://leancloud.cn/1.1/login";
 		let map = {};
 		map.method = "POST";
 		map.headers = privateHeaders;
 		map.body = JSON.stringify({
-				'username':_userName ? _userName : null,
-		        'mobilePhoneNumber': _phoneNumber ? _phoneNumber : null,
+				'username':_userName,
 		        'password': _password,
 		    });
 
