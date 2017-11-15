@@ -10,19 +10,23 @@ import {
     Platform,
 } from 'react-native'
 
+
 import Dimensions from 'Dimensions';
 import DefautHeader from '../Image/Icons/icon_default_header.png';
 import Forward from '../Image/Icons/icon_forward.png';
 import TitleNavigator from '../Component/TitleNavigator';
 import LogIn from '../View/LogIn';
 import ModalLayer from '../Component/ModalLayer';
+import DetailInfoPage from '../View/DetailInfoPage';
 
 export default class MyInfoPage extends Component{
 	constructor(props){
 		super(props);
+
 		this.state = {
 			isModalShow:false,
 			isReminder:false,
+			hasLogin:global.user.loginState,
 		}
 
 	}
@@ -30,13 +34,18 @@ export default class MyInfoPage extends Component{
 
 	_pushToLogIn(){
 		// var currentUser = null;
-		if (global.user.loginState){
-			this.setState({
-				isModalShow:true,
-				isReminder:true,
-				reminderContent:'已登陆',
+		if (this.state.hasLogin){
+			const{navigator} = this.props;
+			navigator.push({
+				name:'DetailInfoPage',
+				component:DetailInfoPage,
+				params:{
+					title:'个人信息',
+					getLoginState:(loginState) => {
+						this.setState({hasLogin:loginState});
+					}
+				}
 			})
-			this._timeHandler();
 		}else{
 			const{navigator} = this.props;
 			navigator.push({
@@ -44,21 +53,26 @@ export default class MyInfoPage extends Component{
 				component:LogIn,
 				params:{
 					title:'登录/注册',
+					getLoginState:(loginState) => {
+						this.setState({hasLogin:loginState});
+					}
 				}
 			})
 		}
 	}
 
-	_logout(){
-		storage.remove({
-			key:'loginState',
-		}).then(()=>{
-			this.setState({isModalShow:true, isReminder:true, reminderContent:'已登出'});
-		});
-		global.user.loginState = false;
-		global.user.userData = '';
-		this._timeHandler();
+	_showUserInfo(){
+		if (this.state.hasLogin){
+			return(
+				<Text style={styles.logInStyle}>{global.user.userData.userName}</Text>
+			)
+		}else{
+			return(
+				<Text style={styles.logInStyle}>登录体验更多功能</Text>
+			)
+		}
 	}
+
 
 	_timeHandler() {
 	    this.reminderTimer = setTimeout(() => {
@@ -84,12 +98,8 @@ export default class MyInfoPage extends Component{
 					style={styles.myInfoView}
 					onPress={()=>{this._pushToLogIn()}}>
 					<Image style={styles.headImageStyle} source={DefautHeader}/>
-					<Text style={styles.logInStyle}>登录体验更多功能</Text>
+					{this._showUserInfo()}
 					<Image style={styles.forwardStyle} source={Forward} />
-				</TouchableOpacity>
-				<TouchableOpacity 
-					style={{marginTop:20,backgroundColor:"#666666",marginLeft:50, marginRight:50, height:50}}
-					onPress={()=>this._logout()}>
 				</TouchableOpacity>
 			</View>
 		)

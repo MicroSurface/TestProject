@@ -66,6 +66,7 @@ export default class LogIn extends Component {
     }
   }
 
+
   async _loginAction(){
     if (this.state.textACT !== '' && this.state.textPWD !== ''){
       this.setState({
@@ -79,6 +80,7 @@ export default class LogIn extends Component {
         this.setState({isModalShow:false });
         //登录成功，保存用户信息
         this._saveUserInfo(postResult);
+        this.props.getLoginState(global.user.loginState);
         const {navigator} = this.props;
         if (navigator){
           navigator.pop();
