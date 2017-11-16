@@ -13,12 +13,13 @@ import Dimensions from 'Dimensions';
 import DefautHeader from '../Image/Icons/icon_default_header.png';
 import Forward from '../Image/Icons/icon_forward.png';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
+import ModalDrawer from '../Component/ModalDrawer';
 
 export default class DetailInfoPage extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-
+			isModalShow:false,
 		}
 	}
 
@@ -40,8 +41,11 @@ export default class DetailInfoPage extends Component{
 	render(){
 		return(
 			<View style={styles.container}>
+				<ModalDrawer isVisible={this.state.isModalShow}/>
 				<TitleNavigatorWithBack navigator={this.props.navigator} title={this.props.title}/>
-				<TouchableOpacity style={styles.headImageViewStyle}>
+				<TouchableOpacity 
+					style={styles.headImageViewStyle}
+					onPress={() => {this.setState({isModalShow:true})}}>
 					<Text style={styles.headTxtStyle}>我的头像</Text>
 					<Image style={styles.headImageStyle} source={DefautHeader} />
 					<Image style={styles.forwardStyle} source={Forward} />
