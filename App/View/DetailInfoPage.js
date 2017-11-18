@@ -6,6 +6,7 @@ import {
     Image,
     View,
     Platform,
+    Modal,
 } from 'react-native'
 
 
@@ -13,7 +14,8 @@ import Dimensions from 'Dimensions';
 import DefautHeader from '../Image/Icons/icon_default_header.png';
 import Forward from '../Image/Icons/icon_forward.png';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
-import ModalDrawer from '../Component/ModalDrawer';
+import ImagePicker from 'react-native-image-crop-picker';
+// import ModalDrawer from '../Component/ModalDrawer';
 
 export default class DetailInfoPage extends Component{
 	constructor(props){
@@ -38,10 +40,50 @@ export default class DetailInfoPage extends Component{
 		}
 	}
 
+	_chooseImages(){
+		ImagePicker.openPicker({
+			width:30,
+			height:40,
+			cropping:true,
+		}).then(image => {
+			console.log('this is image:'+image);
+		}).catch(e => {
+			return;
+		});
+
+		//清理临时文件
+		ImagePicker.clean().then(() => { 
+	       	console.log('removed all tmp images from tmp directory');
+	  	}).catch(e => { 
+	      return;
+	  	});
+	}
+
 	render(){
 		return(
 			<View style={styles.container}>
-				<ModalDrawer isVisible={this.state.isModalShow}/>
+				<Modal
+					animationType={'slide'}
+		          	transparent={true}
+		          	visible={this.state.isModalShow}>
+		          	<View style={styles.modalStyle}>
+		          		<TouchableOpacity 
+			          		style={styles.optionStyle}
+			          		onPress={() => {}}>
+			          		<Text style={styles.optionTxtStyle}>拍照</Text>
+		          		</TouchableOpacity>
+		          		<TouchableOpacity 
+			          		style={styles.cancelStyle}
+			          		onPress={() => {this._chooseImages()}}>
+			          		<Text style={styles.optionTxtStyle}>本地相册</Text>
+		          		</TouchableOpacity>
+		          		<TouchableOpacity 
+			          		style={styles.cancelStyle}
+			          		onPress={() => {this.setState({isModalShow:false})}}>
+			          		<Text style={styles.cancelTxtStyle}>取消</Text>
+		          		</TouchableOpacity>
+		          	</View>
+				</Modal>
 				<TitleNavigatorWithBack navigator={this.props.navigator} title={this.props.title}/>
 				<TouchableOpacity 
 					style={styles.headImageViewStyle}
@@ -110,6 +152,46 @@ const styles = StyleSheet.create({
 		height:15,
 		width:15,
 		alignSelf:'center',
+	},
+	modalStyle:{
+		position:'absolute',
+		top:0,
+		bottom:0,
+		left:0,
+		right:0,
+		backgroundColor:'rgba(0,0,0,0.5)',
+		flexDirection:'column',
+		justifyContent:'flex-end',
+	},
+	optionStyle:{
+		marginBottom:5,
+		marginLeft:50,
+		marginRight:50,
+		height:50,
+		borderRadius:5,
+		backgroundColor:'#ffffff',
+		justifyContent:'center',
+	},
+	optionTxtStyle:{
+		fontSize:18, 
+		color:'#1E90FF',
+		alignSelf:'center',
+		textAlign:'center',
+	},
+	cancelStyle:{
+		marginBottom:10,
+		marginLeft:50,
+		marginRight:50,
+		height:50,
+		borderRadius:5,
+		backgroundColor:'#ffffff',
+		justifyContent:'center',
+	},
+	cancelTxtStyle:{
+		fontSize:18, 
+		color:'#ff0000',
+		alignSelf:'center',
+		textAlign:'center',
 	}
 })
 
