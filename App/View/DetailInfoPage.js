@@ -15,6 +15,7 @@ import DefautHeader from '../Image/Icons/icon_default_header.png';
 import Forward from '../Image/Icons/icon_forward.png';
 import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
 import ImagePicker from 'react-native-image-crop-picker';
+import RegisterService from '../Service/RegisterService';
 // import ModalDrawer from '../Component/ModalDrawer';
 
 export default class DetailInfoPage extends Component{
@@ -22,6 +23,7 @@ export default class DetailInfoPage extends Component{
 		super(props);
 		this.state = {
 			isModalShow:false,
+			imageUrl: global.headerImage.hasLoaded ? global.headerImage.imagePath['imagePath'] : DefautHeader,
 		}
 	}
 
@@ -40,13 +42,23 @@ export default class DetailInfoPage extends Component{
 		}
 	}
 
-	_chooseImages(){
-		ImagePicker.openPicker({
+	_onRequestClose(){
+		this.setState({isModalShow:false});
+	}
+
+
+	async _chooseImages(){
+		await ImagePicker.openPicker({
 			width:30,
 			height:40,
 			cropping:true,
 		}).then(image => {
-			console.log('this is image:'+image);
+			// console.log('11111'+image['filename']);
+			// console.log('11111'+image['sourceURL']);
+			this.setState({
+				imageUrl:{uri:image['sourceURL']},
+			})
+			this._saveHeaderImage(this.state.imageUrl);
 		}).catch(e => {
 			return;
 		});
@@ -59,13 +71,32 @@ export default class DetailInfoPage extends Component{
 	  	});
 	}
 
+	_saveHeaderImage(_imagePath){
+	   storage.save({
+	      key:'headerImage',
+	      data:{
+	       imagePath:_imagePath,
+	      },
+	      expires:null,
+	    });
+	    global.headerImage.hasLoaded = true;
+	    global.headerImage.imagePath = {
+	         imagePath:_imagePath,
+	    };
+	  }
+
+	_uploadImages(){
+
+	}
+
 	render(){
 		return(
 			<View style={styles.container}>
 				<Modal
 					animationType={'slide'}
 		          	transparent={true}
-		          	visible={this.state.isModalShow}>
+		          	visible={this.state.isModalShow}
+		          	onRequestClose={() => {this._onRequestClose()}}>
 		          	<View style={styles.modalStyle}>
 		          		<TouchableOpacity 
 			          		style={styles.optionStyle}
@@ -89,7 +120,7 @@ export default class DetailInfoPage extends Component{
 					style={styles.headImageViewStyle}
 					onPress={() => {this.setState({isModalShow:true})}}>
 					<Text style={styles.headTxtStyle}>我的头像</Text>
-					<Image style={styles.headImageStyle} source={DefautHeader} />
+					<Image style={styles.headImageStyle} source={this.state.imageUrl} />
 					<Image style={styles.forwardStyle} source={Forward} />
 				</TouchableOpacity>
 				<View style={{backgroundColor:'#dfdfdf', height:1, marginLeft:0, marginRight:0}}/>
