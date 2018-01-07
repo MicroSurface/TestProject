@@ -27,6 +27,7 @@ export default class MyInfoPage extends Component{
 			isModalShow:false,
 			isReminder:false,
 			hasLogin:global.user.loginState,
+			headerImage:global.headerImage.hasLoaded ? global.headerImage.imagePath['imagePath'] : DefautHeader,
 		}
 
 	}
@@ -64,11 +65,17 @@ export default class MyInfoPage extends Component{
 	_showUserInfo(){
 		if (this.state.hasLogin){
 			return(
-				<Text style={styles.logInStyle}>{global.user.userData.userName}</Text>
+				<View style={{flexDirection:'row'}}>
+					<Image style={styles.headImageStyle} source={global.headerImage.hasLoaded ? global.headerImage.imagePath['imagePath'] : DefautHeader}/>
+					<Text style={styles.logInStyle}>{global.user.userData.userName}</Text>
+				</View>
 			)
 		}else{
 			return(
-				<Text style={styles.logInStyle}>登录体验更多功能</Text>
+				<View style={{flexDirection:'row'}}>
+					<Image style={styles.headImageStyle} source={DefautHeader}/>
+					<Text style={styles.logInStyle}>登录体验更多功能</Text>
+				</View>
 			)
 		}
 	}
@@ -97,7 +104,6 @@ export default class MyInfoPage extends Component{
 				<TouchableOpacity 
 					style={styles.myInfoView}
 					onPress={()=>{this._pushToLogIn()}}>
-					<Image style={styles.headImageStyle} source={DefautHeader}/>
 					{this._showUserInfo()}
 					<Image style={styles.forwardStyle} source={Forward} />
 				</TouchableOpacity>
