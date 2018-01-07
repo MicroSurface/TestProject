@@ -40,6 +40,12 @@ export default class DetailInfoPage extends Component{
 		if (navigator){
 			navigator.pop();
 		}
+		storage.remove({
+			key:'headerImage',
+		}).then(()=>{
+
+		});
+		global.headerImage.hasLoaded = false
 	}
 
 	_onRequestClose(){
