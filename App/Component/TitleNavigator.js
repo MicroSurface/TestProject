@@ -1,14 +1,20 @@
 import React, {Component} from 'React';
 import {
 	StyleSheet,
-	Navigator,
 	View,
 	Text,
 	Image,
 	AppRegistry,
+	TouchableOpacity,
 	Platform,
 	StatusBar,
 } from 'react-native';
+import {
+  Navigator,
+} from 'react-native-deprecated-custom-components';
+
+import IconBack from '../Image/Icons/icon_back.png';
+import IconClose from '../Image/Icons/icon_close.png';
 
 export default class TitleNavigator extends Component{
 	constructor(props){
@@ -32,8 +38,78 @@ export default class TitleNavigator extends Component{
 			
 		)
 	}
+}
 
+export class TitleNavigatorWithBack extends Component{
+	constructor(props){
+		super(props);
+	}
 
+	_popBack(){
+		const{ navigator } = this.props;
+		if (navigator) {
+			navigator.pop();
+		}
+	}
+
+	render(){
+		return(
+			<View style={styles.container}>
+				<StatusBar
+					hidden={false}
+					translucent={true}
+					backgroundColor={'rgba(255,255,255,0.1)'}
+					barStyle={'light-content'}>
+				</StatusBar>
+				<View>
+					<TouchableOpacity
+					 	style={styles.backBtnStyle}
+					 	onPress={() => {this._popBack()}}>
+						<Image style={styles.backImgStyle} source={IconBack}/>
+					</TouchableOpacity>
+					<Text style={styles.titleStyle}>{this.props.title}</Text>
+				</View>
+			</View>
+			
+		)
+	}
+}
+
+export class TitleNavigatorWithClose extends Component{
+	constructor(props){
+		super(props);
+	}
+
+	_popBack(){
+		const{ navigator } = this.props;
+		if (navigator) {
+			navigator.pop({
+				sceneConfig:Navigator.SceneConfigs.FloatFromBottom,
+			});
+		}
+	}
+
+	render(){
+		return(
+			<View style={styles.container}>
+				<StatusBar
+					hidden={false}
+					translucent={true}
+					backgroundColor={'rgba(255,255,255,0.1)'}
+					barStyle={'light-content'}>
+				</StatusBar>
+				<View>
+					<TouchableOpacity
+					 	style={styles.backBtnStyle}
+					 	onPress={() => {this._popBack()}}>
+						<Image style={styles.backImgStyle} source={IconClose}/>
+					</TouchableOpacity>
+					<Text style={styles.titleStyle}>{this.props.title}</Text>
+				</View>
+			</View>
+			
+		)
+	}
 }
 
 const styles = StyleSheet.create({
@@ -53,6 +129,22 @@ const styles = StyleSheet.create({
 		alignSelf:'center',
 		fontWeight:'bold',
 	},
+	backBtnStyle:{
+		position:'absolute',
+		marginTop:(Platform.OS == 'ios') ? 17 : 20,
+		marginLeft:10,
+		height:30,
+		width:30,
+		justifyContent:'center',
+	},
+	backImgStyle:{
+		height:20,
+		width:20,
+		alignSelf:'center',
+	},
 })
 
-module.exports = TitleNavigator;
+
+// module.exports = TitleNavigator;
+// module.exports = TitleNavigatorTest1;
+

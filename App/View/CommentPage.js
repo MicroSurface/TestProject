@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import styles from '../CSS/CommentPageStyle';
-import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
+import {TitleNavigatorWithBack} from '../Component/TitleNavigator';
 import NoRecord from '../Image/Icons/icon_no_records.png';
 import Upload from '../Image/Icons/icon_upload.png';
 import DefautHeader from '../Image/Icons/icon_default_header.png';
