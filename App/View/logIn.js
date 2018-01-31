@@ -26,7 +26,7 @@ var Item = AV.Object.extend('Item');
 import HomePage from './HomePage'
 import BubbleBox from '../Component/BubbleBox';
 import TabNavigator from '../Component/TabNavigator';
-import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
+import {TitleNavigatorWithBack} from '../Component/TitleNavigator';
 import NewUserRegisterPage from '../View/NewUserRegisterPage';
 import RegisterService from '../Service/RegisterService';
 import ModalLayer from '../Component/ModalLayer';

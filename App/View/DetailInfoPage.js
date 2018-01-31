@@ -13,7 +13,7 @@ import {
 import Dimensions from 'Dimensions';
 import DefautHeader from '../Image/Icons/icon_default_header.png';
 import Forward from '../Image/Icons/icon_forward.png';
-import TitleNavigatorWithBack from '../Component/TitleNavigatorWithBack';
+import {TitleNavigatorWithBack} from '../Component/TitleNavigator';
 import ImagePicker from 'react-native-image-crop-picker';
 import RegisterService from '../Service/RegisterService';
 // import ModalDrawer from '../Component/ModalDrawer';

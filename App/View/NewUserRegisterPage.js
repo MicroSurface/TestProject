@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import TitleNavigatorWithClose from '../Component/TitleNavigatorWithClose';
+import {TitleNavigatorWithClose} from '../Component/TitleNavigator';
 import RegisterService from '../Service/RegisterService';
 import MyInfoPage from '../View/MyInfoPage';
 import ModalLayer from '../Component/ModalLayer';
