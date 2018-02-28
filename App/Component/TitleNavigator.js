@@ -102,7 +102,7 @@ export class TitleNavigatorWithClose extends Component{
 					<TouchableOpacity
 					 	style={styles.backBtnStyle}
 					 	onPress={() => {this._popBack()}}>
-						<Image style={styles.backImgStyle} source={IconClose}/>
+						<Image style={styles.closeImgStyle} source={IconClose}/>
 					</TouchableOpacity>
 					<Text style={styles.titleStyle}>{this.props.title}</Text>
 				</View>
@@ -142,6 +142,11 @@ const styles = StyleSheet.create({
 		width:20,
 		alignSelf:'center',
 	},
+	closeImgStyle:{
+		height:15,
+		width:15,
+		alignSelf:'center',
+	}
 })
 
 
